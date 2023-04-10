@@ -12,9 +12,9 @@ const Bounty = () => {
         <h2>Trim field surrounding spaces</h2>
         <div></div>
       </div>
+      {/* <p></p>
       <p></p>
-      <p></p>
-      <p></p>
+      <p></p> */}
     </div>
   );
 };
