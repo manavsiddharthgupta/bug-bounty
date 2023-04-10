@@ -1,0 +1,39 @@
+.filter_outerlayer {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+.seachFilter {
+  width: 100%;
+  font-size: small;
+  height: 25px;
+  padding: 5px;
+  outline: none;
+  border-radius: 2px;
+  border: 1px solid black;
+}
+.sort {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  width: 100%;
+}
+.sort select {
+  height: 25px;
+  font-size: small;
+  outline: none;
+  width: 100%;
+}
+
+@media screen and (min-width: 720px) {
+  .sort select {
+    width: fit-content;
+  }
+  .seachFilter {
+    width: 320px;
+  }
+  .sort {
+    width: fit-content;
+  }
+}

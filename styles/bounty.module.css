@@ -1,0 +1,30 @@
+.bounty {
+  margin: 1rem 0rem;
+  border: 1px solid red;
+  padding: 2rem;
+  border-radius: 8px;
+}
+.bounty_price_status_outer {
+  border: 1px solid black;
+  display: flex;
+  gap: 1rem;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.bounty_price {
+  font-weight: 800;
+  font-size: 1.25em;
+}
+.bounty_status p {
+  font-size: x-small;
+}
+.bounty_status {
+  padding: 6px 8px;
+  border-radius: 20px;
+  background-color: rgb(5, 84, 134);
+  color: white;
+}
+.bounty_title h2 {
+  font-size: 1.2em;
+}
