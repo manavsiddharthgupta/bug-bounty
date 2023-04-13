@@ -7,4 +7,18 @@
 
 html {
   font-family: "Inter", sans-serif;
+  height: 100%;
+}
+#modal {
+  width: fit-content;
+  height: fit-content;
+}
+body {
+  height: 100%;
+  overflow-y: auto;
+}
+#__next {
+  height: 100%;
+  overflow-y: auto;
+  position: relative;
 }

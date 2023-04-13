@@ -9,6 +9,9 @@ const AllBounties = () => {
       <div className={styles.bounty_parent_div}>
         <FilterComponent />
         <Bounty />
+        <Bounty />
+        <Bounty />
+        <Bounty />
       </div>
     </Card>
   );

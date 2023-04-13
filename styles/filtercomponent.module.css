@@ -1,14 +1,14 @@
 .filter_outerlayer {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   gap: 1rem;
   flex-wrap: wrap;
 }
 .seachFilter {
   width: 100%;
   font-size: small;
-  height: 25px;
-  padding: 5px;
+  padding: 8px 10px;
   outline: none;
   border-radius: 2px;
   border: 1px solid black;
@@ -20,7 +20,7 @@
   width: 100%;
 }
 .sort select {
-  height: 25px;
+  height: 30px;
   font-size: small;
   outline: none;
   width: 100%;
