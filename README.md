@@ -1,15 +1,21 @@
 ## Bug Bounty Program
+
 A Webapp where you find a bug, connect with mentor to fix the bug and earn rewards.
 
 ## Getting Started
+
 clone git repo:
+
 ```
 git clone https://github.com/manavsiddharthgupta/bug-bounty.git
 ```
+
 install all dependencies:
+
 ```
 npm install
 ```
+
 run the development server:
 
 ```bash
@@ -18,12 +24,11 @@ npm run dev
 
 ## How to contribute
 
- - Select an issue 
- - Create an issue if you want to update or change ui
- - get assigned
- - You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
- - create pull request to get merged
- 
+- Select an issue
+- Create an issue if you want to update or change ui
+- get assigned
+- You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+- create pull request to get merged
 
 #
 
@@ -34,3 +39,17 @@ The `pages/api` directory is mapped to `/api/*`. Files in this directory are tre
 This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+
+## To do
+
+- Create Bounty Modal
+- Create Bounty Page
+- Each Bounty Description component
+- Each Bounty Application component
+- Each Bounty Discussion component
+- Implement Apply Modal
+- Implement share option
+- update state according to the all bounties type
+- infinite scroll
+- update filter logic
+- Backend logic

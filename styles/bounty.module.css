@@ -15,6 +15,7 @@
 .bounty_price {
   font-weight: 800;
   font-size: 1.25em;
+  color: black;
 }
 .bounty_status p {
   font-size: x-small;
@@ -38,6 +39,7 @@
   white-space: nowrap;
   text-overflow: ellipsis;
   font-size: 1.2em;
+  color: black;
 }
 .bounty_title div {
   display: flex;
@@ -49,10 +51,12 @@
   white-space: nowrap;
   text-overflow: ellipsis;
   margin-bottom: 0.8rem;
+  color: black;
 }
 .bounty_reqskills_title {
   font-weight: 600;
   font-size: small;
+  color: black;
 }
 .extra_inf {
   display: flex;
@@ -65,6 +69,7 @@
 .extra_inf p {
   font-size: 0.75em;
   font-weight: 600;
+  color: black;
 }
 .extra_inf div {
   display: flex;
@@ -74,7 +79,9 @@
 .extra_inf div span {
   font-size: smaller;
   font-weight: 700;
+  color: black;
 }
 .user_icon {
   font-size: small;
+  color: black;
 }

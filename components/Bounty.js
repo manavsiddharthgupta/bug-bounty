@@ -3,37 +3,47 @@ import styles from "../styles/bounty.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
 
-const Bounty = () => {
+const Bounty = ({ eachBountyData }) => {
   return (
     <div className={styles.bounty}>
       <div className={styles.bounty_price_status_outer}>
-        <h1 className={styles.bounty_price}>₹ 154.00</h1>
-        <Tag>Open</Tag>
+        <h1 className={styles.bounty_price}>{eachBountyData.price}</h1>
+        <Tag>{eachBountyData.status}</Tag>{" "}
+        {/*  change color according to status */}
       </div>
       <div className={styles.bounty_title}>
-        <h2>
-          Trim field surrounding spaces full Hide or get rid of the source
-          textarea.
-        </h2>
+        <h2>{eachBountyData.title}</h2>
         <div>
-          {/* fetch tags text and change color*/}
-          <Tag className={styles.bounty_status}>bug</Tag>
-          <Tag className={styles.bounty_status}>priority</Tag>
+          {/* random change color */}
+          {eachBountyData.tags.map((eachtag) => {
+            return (
+              <Tag key={eachtag} className={styles.bounty_status}>
+                {eachtag}
+              </Tag>
+            );
+          })}
         </div>
       </div>
-      <p className={styles.bounty_subTitle}>
-        I would like to convert my ChatGPT clone codebase to trim field
-        surrounding need to have full Hide or get rid of the source textarea.
-      </p>
+      <p className={styles.bounty_subTitle}>{eachBountyData.subTitle}</p>
       <span className={styles.bounty_reqskills_title}>Skills Required : </span>
       <span className={styles.bounty_reqskills_title}>
-        React, Javascript, Python, Machine Learning
+        {eachBountyData.requiredSkills.reduce(
+          (accumulator, currentSkill, index) => {
+            if (eachBountyData.requiredSkills.length - 1 === index) {
+              return accumulator + currentSkill;
+            }
+            return accumulator + `${currentSkill}, `;
+          },
+          ""
+        )}
       </span>
       <div className={styles.extra_inf}>
-        <p>opened on Mar 10th by @manavgupta</p>
+        <p>
+          opened on {eachBountyData.openedOn} by @{eachBountyData.openedBy}
+        </p>
         <div>
           <FontAwesomeIcon className={styles.user_icon} icon={faUser} />
-          <span>5 Applicants</span>
+          <span>{eachBountyData.applicants} Applicants</span>
         </div>
       </div>
     </div>

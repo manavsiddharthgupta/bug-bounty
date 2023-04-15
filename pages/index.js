@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useEffect, useReducer, useState } from "react";
 import { createPortal } from "react-dom";
 import Head from "next/head";
 import NavBar from "@/components/NavBar";
@@ -13,22 +13,75 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAdd } from "@fortawesome/free-solid-svg-icons";
 import { Modal, BackGroundModal } from "@/ui/Modal";
 
-export default function Home() {
-  const [bountyType, setBountyType] = useState("all");
-  const [pageTitle, setTitle] = useState("all");
+const bountyTypeInitialState = {
+  bountyType: "all",
+  pageTitle: "",
+  allBounty: [],
+  myPostedBounty: [],
+  assignedBounty: [],
+};
+
+const bountyReducerFunc = (state, action) => {
+  if (action.type === "TYPE") {
+    // ----Logic
+
+    return {
+      ...state,
+      bountyType: action.payload,
+    };
+  } else if (action.type === "PAGE_TITLE") {
+    // ---Logic
+
+    return {
+      ...state,
+      pageTitle: action.payload,
+    };
+  } else if (action.type === "SET_ALL_BOUNTY") {
+    // ---Logic
+
+    return {};
+  } else if (action.type === "SET_POSTED_BOUNTY") {
+    // ---Logic
+
+    return {};
+  } else if (action.type === "SET_ASSIGNED_BOUNTY") {
+    // ---Logic
+
+    return {};
+  } else {
+    return {
+      ...state,
+    };
+  }
+};
+
+export default function Home({ allBounties }) {
+  const [bountiesType, DispatchBountyTypefunc] = useReducer(
+    bountyReducerFunc,
+    bountyTypeInitialState
+  );
   const [showCreateBountyModal, setModalState] = useState(false);
+
   const router = useRouter();
 
   useEffect(() => {
+    // use to make page more dynamic base on query parameter ----
+
     if (router.query?.t === "myposted") {
-      setBountyType("myposted");
-      setTitle("My Posted Bounty");
+      DispatchBountyTypefunc({ type: "TYPE", payload: "myposted" });
+      DispatchBountyTypefunc({
+        type: "PAGE_TITLE",
+        payload: "My Posted Bount",
+      });
     } else if (router.query?.t === "assigned") {
-      setBountyType("assigned");
-      setTitle("My Assigned Bounty");
+      DispatchBountyTypefunc({ type: "TYPE", payload: "assigned" });
+      DispatchBountyTypefunc({
+        type: "PAGE_TITLE",
+        payload: "My Assigned Bounty",
+      });
     } else {
-      setBountyType("all");
-      setTitle("All Bounty");
+      DispatchBountyTypefunc({ type: "TYPE", payload: "all" });
+      DispatchBountyTypefunc({ type: "PAGE_TITLE", payload: "All Bounty" });
     }
   }, [router.query?.t]);
 
@@ -44,17 +97,17 @@ export default function Home() {
     <>
       <Head>
         <title>Bug Bounty</title>
-        <meta name="Displays Bounties" content={pageTitle} />
+        <meta name="Displays Bounties" content={bountiesType.pageTitle} />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
         <NavBar />
         <section className={styles.section}>
-          {bountyType === "all" && <BountyServices />}
+          {bountiesType.bountyType === "all" && <BountyServices />}
           <Card>
             <div className={styles.pageTitle_button}>
-              <PageTitle>{pageTitle}</PageTitle>
+              <PageTitle>{bountiesType.pageTitle}</PageTitle>
               <Button onClick={onHandleCreateButton} className={styles.btn}>
                 <FontAwesomeIcon
                   style={{
@@ -66,7 +119,7 @@ export default function Home() {
               </Button>
             </div>
           </Card>
-          <AllBounties />
+          <AllBounties allBountyData={allBounties} />
         </section>
       </main>
       {showCreateBountyModal &&
@@ -78,4 +131,15 @@ export default function Home() {
         )}
     </>
   );
+}
+
+export async function getStaticProps(context) {
+  // temprorary code need changes (error handling not implemented) ----
+  const res = await fetch("http://localhost:3004/api-bounties");
+  const data = await res.json();
+  return {
+    props: {
+      allBounties: data,
+    },
+  };
 }
