@@ -11,6 +11,7 @@ import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
 
 const EachBounty = ({ eachBounty }) => {
   const router = useRouter();
+
   console.log(eachBounty);
   const currRoute = router.query.t ? `/?t=${router.query.t}` : "/";
   const navLinks = [

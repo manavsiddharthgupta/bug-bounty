@@ -42,14 +42,14 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 ## To do
 
-- Create Bounty Modal
-- Create Bounty Page
-- Each Bounty Description component
-- Each Bounty Application component
-- Each Bounty Discussion component
-- Implement Apply Modal
-- Implement share option
-- update state according to the all bounties type
-- infinite scroll
-- update filter logic
-- Backend logic
+- [x] Create Bounty Type Modal
+- [ ] Create Bounty Page
+- [ ] Each Bounty Description component
+- [ ] Each Bounty Application component
+- [ ] Each Bounty Discussion component
+- [ ] Implement Apply Modal
+- [ ] Implement share option
+- [ ] update state according to the all bounties type
+- [ ] infinite scroll
+- [ ] update filter logic
+- [ ] Backend logic

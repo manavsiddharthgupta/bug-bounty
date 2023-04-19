@@ -1,0 +1,20 @@
+.modal_outerlayer {
+  padding: 1rem;
+  font-size: small;
+  display: flex;
+  flex-direction: column;
+}
+.choose_bountyTypes {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 1rem;
+}
+.createbounty_btn {
+  margin-top: 2rem;
+  align-self: flex-end;
+}
+@media screen and (min-width: 600px) {
+  .choose_bountyTypes {
+    justify-content: space-between;
+  }
+}
