@@ -1,0 +1,32 @@
+.outer_create_new_bounty {
+  margin: 4rem auto;
+  max-width: 745px;
+}
+.outer_create_new_bounty section {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  margin-top: 1.25rem;
+}
+.back_btn {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+.back_btn p:first-child {
+  margin-bottom: 0.15rem;
+}
+.outer_create_new_bounty h1 {
+  font-size: 1.5rem;
+}
+.desc {
+  height: 200px;
+}
+.subTitle {
+  height: 55px;
+}
+@media screen and (min-width: 720px) {
+  .outer_create_new_bounty h1 {
+    font-size: 2rem;
+  }
+}

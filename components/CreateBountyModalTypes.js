@@ -2,6 +2,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import styles from "../styles/createbounty_modaltypes.module.css";
 
 const BountyType = ({
+  id,
   title,
   subtitle,
   expectedPrice,
@@ -9,10 +10,9 @@ const BountyType = ({
   onClick,
   styling,
 }) => {
-  console.log(styling);
   return (
     <li
-      id={title}
+      id={id}
       onClick={onClick}
       className={styles.each_bountyTypes}
       style={styling}
@@ -26,4 +26,5 @@ const BountyType = ({
     </li>
   );
 };
+
 export default BountyType;

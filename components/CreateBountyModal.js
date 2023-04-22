@@ -12,35 +12,40 @@ import { useState } from "react";
 const CreateBountyModal = () => {
   const [selectedBountyType, setBountyType] = useState(null);
   const router = useRouter();
-  console.log(selectedBountyType);
   const allBountyTypes = [
     {
       title: "Tools",
+      id: "tools",
       subTitle: "Get a custom tool, automated bot, or AI systems",
       expectedPrice: "₹ 1000",
       titleIcon: faComment,
     },
     {
       title: "Web Application",
+      id: "web-app",
       subTitle: "Build an interactive web application and share the world",
       expectedPrice: "₹ 2500",
       titleIcon: faTools,
     },
     {
       title: "Get Help",
+      id: "get-help",
       subTitle: "Fix a bud, build a feature, or learn something new",
       expectedPrice: "₹ 400",
       titleIcon: faTools,
     },
     {
       title: "Customs",
+      id: "customs",
       subTitle: "Needs something else, describe your bounty",
       expectedPrice: "₹ 1000",
       titleIcon: faLightbulb,
     },
   ];
   const onCreateBounty = () => {
-    router.push("/create-new-bounty");
+    if (selectedBountyType) {
+      router.push(`/create-new-bounty/?type=${selectedBountyType}`);
+    }
   };
 
   const onSelectBountyTypes = (event) => {
@@ -55,14 +60,15 @@ const CreateBountyModal = () => {
         {allBountyTypes.map((eachTypes) => {
           return (
             <BountyType
-              key={eachTypes.title}
+              id={eachTypes.id}
+              key={eachTypes.id}
               title={eachTypes.title}
               subtitle={eachTypes.subTitle}
               expectedPrice={eachTypes.expectedPrice}
               titleIcon={eachTypes.titleIcon}
               onClick={onSelectBountyTypes}
               styling={
-                selectedBountyType === eachTypes.title
+                selectedBountyType === eachTypes.id
                   ? { outline: "2px solid black" }
                   : { outline: "none" }
               }

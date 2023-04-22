@@ -1,0 +1,8 @@
+.each_tag {
+  border: 1px solid black;
+  font-size: 0.7em;
+  padding: 0.1rem 0.25rem;
+  border-radius: 8px;
+  display: inline-block;
+  margin-right: 0.25em;
+}
