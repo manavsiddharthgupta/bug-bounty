@@ -6,12 +6,33 @@ import Button from "@/ui/Button";
 import Input from "@/ui/Input";
 import useInputState from "@/hooks/useInputState";
 import TextArea from "@/ui/TextArea";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import InputTags from "@/ui/InputTags";
 import CommunicationInput from "@/components/CommunicationInputComponent";
 import AmountInput from "@/components/AmountInput";
+import {
+  custom,
+  tools,
+  webApp,
+  getHelp,
+} from "@/store/predefined-create-bounty-desc";
+import useTextAreaState from "@/hooks/useTextAreaState";
+import { bountyDataformat } from "@/store/createBountyconversion";
 
 const CreateBounty = () => {
+  // states
+  const router = useRouter();
+  const [createBountyType, setBountyType] = useState(custom);
+  const [tags, setTags] = useState([]);
+  const [skillRequired, setSkillRequired] = useState([]);
+  const [communicationLink, setCommunicationLink] = useState({
+    type: "Discord",
+    link: "",
+  });
+  const [amount, setAmount] = useState(createBountyType.amt);
+  const [isFormTouched, setFormTouched] = useState(false);
+
+  // custom hooks
   const {
     inputRef: bountyTitleRef,
     isValueValid: isTitleValid,
@@ -20,18 +41,20 @@ const CreateBounty = () => {
   } = useInputState();
 
   const {
-    inputRef: bountySubTitleRef,
+    textState: bountySubTitleValue,
     isValueValid: isSubtitleValid,
     isTouched: isSubTitleTouch,
     setBlurHandler: setSubTitleBlurHandler,
-  } = useInputState();
+    onChangeHandler: onChangeSubTitleHandler,
+  } = useTextAreaState();
 
   const {
-    inputRef: bountyDescRef,
+    textState: bountyDescriptionValue,
     isValueValid: isDescriptionValid,
     isTouched: isDescriptionTouch,
     setBlurHandler: setDescriptionBlurHandler,
-  } = useInputState();
+    onChangeHandler: onChangeDescriptionHandler,
+  } = useTextAreaState(createBountyType?.descStruc);
 
   const {
     inputRef: bountyCompleteDateRef,
@@ -47,23 +70,63 @@ const CreateBounty = () => {
     setBlurHandler: setBountyGithubLinkBlurHandler,
   } = useInputState();
 
-  const [tags, setTags] = useState([]);
+  const {
+    inputRef: bountyFigmaLinkRef,
+    isValueValid: isFigmaLinkValid,
+    isTouched: isFigmaLinkTouch,
+    setBlurHandler: setBountyFigmaLinkBlurHandler,
+  } = useInputState();
 
-  const [skillRequired, setSkillRequired] = useState([]);
+  // side Effects
+  useEffect(() => {
+    switch (router.query.type) {
+      case "web-app":
+        setBountyType(webApp);
+        setAmount(webApp.amt);
+        break;
+      case "tools":
+        setBountyType(tools);
+        setAmount(tools.amt);
+        break;
+      case "get-help":
+        setBountyType(getHelp);
+        setAmount(getHelp.amt);
+    }
+  }, [router.query.type]);
 
-  const [communicationLink, setCommunicationLink] = useState([
-    { communicationType: "Discord", link: "" },
-  ]); // Add State to components
+  useEffect(() => {
+    function alertMessage(event) {
+      if (isFormTouched) {
+        event.preventDefault();
+        event.returnValue = "\\o/";
+      }
+    }
+    window.addEventListener("beforeunload", alertMessage);
+    return () => {
+      window.removeEventListener("beforeunload", alertMessage);
+    };
+  }, [isFormTouched]);
 
-  const [amount, setAmount] = useState("0"); // Add State to components
-
-  console.log(isTitleTouch, isTitleValid);
-  console.log(isSubTitleTouch, isSubtitleValid);
-  console.log(isDescriptionTouch, isDescriptionValid);
-  console.log(isBountyCompleteDateTouch, isBountyCompleteDateValid);
-  console.log(isGithubLinkTouch, isGithubLinkValid);
-
-  const router = useRouter();
+  // functions
+  const onCreateBountyFunc = () => {
+    let figmaLink = null;
+    if (router.query.type === "web-app") {
+      figmaLink = bountyFigmaLinkRef?.current?.value;
+    }
+    bountyDataformat(
+      bountyTitleRef?.current?.value,
+      bountySubTitleValue,
+      bountyDescriptionValue,
+      tags,
+      skillRequired,
+      bountyCompleteDateRef?.current?.value,
+      bountyGithubLinkRef?.current?.value,
+      figmaLink,
+      communicationLink,
+      amount,
+      router.query.type
+    );
+  };
 
   const onCreateTag = (val) => {
     setTags((state) => {
@@ -88,10 +151,13 @@ const CreateBounty = () => {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main>
+      <main
+        onClick={() => {
+          setFormTouched(true);
+        }}
+      >
         <Card>
           <div className={styles.outer_create_new_bounty}>
-            {/* <p>Create Bounty - {router.query.type}</p> */}
             <Button className={styles.back_btn}>
               <p>&larr;</p>
               <p>back to all bounties</p>
@@ -105,14 +171,16 @@ const CreateBounty = () => {
                 type="text"
               />
               <TextArea
+                value={bountySubTitleValue}
+                onChange={onChangeSubTitleHandler}
                 className={styles.subTitle}
-                inputRef={bountySubTitleRef}
                 onBlur={setSubTitleBlurHandler}
                 label="Sub Title"
               />
               <TextArea
+                value={bountyDescriptionValue}
+                onChange={onChangeDescriptionHandler}
                 className={styles.desc}
-                inputRef={bountyDescRef}
                 onBlur={setDescriptionBlurHandler}
                 label="Description"
               />
@@ -140,9 +208,27 @@ const CreateBounty = () => {
                 label="Github Repository Link"
                 type="text"
               />
-              <CommunicationInput />
-              <AmountInput />
-              <Button>Create Bounty</Button>
+
+              {router.query.type === "web-app" && (
+                <Input
+                  inputRef={bountyFigmaLinkRef}
+                  onBlur={setBountyFigmaLinkBlurHandler}
+                  label="Figma File Link"
+                  type="text"
+                />
+              )}
+
+              <CommunicationInput
+                value={communicationLink}
+                onSetCommunicationHandler={setCommunicationLink}
+              />
+              <AmountInput
+                value={amount}
+                onChange={(e) => {
+                  setAmount(e.target.value);
+                }}
+              />
+              <Button onClick={onCreateBountyFunc}>Create Bounty</Button>
             </section>
           </div>
         </Card>
@@ -151,3 +237,10 @@ const CreateBounty = () => {
   );
 };
 export default CreateBounty;
+
+// content change based on types which will reflects on bounty details page
+// make sure change bounty details page also
+// add input feedback logic
+// set min amount i.e > 0
+// date validation i.e date should be greater than today
+// tags and requiredSkills validation i.e should not be empty
