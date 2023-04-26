@@ -43,7 +43,7 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 ## To do
 
 - [x] Create Bounty Type Modal
-- [ ] Create Bounty Page
+- [x] Create Bounty Page
 - [ ] Each Bounty Description component
 - [ ] Each Bounty Application component
 - [ ] Each Bounty Discussion component
