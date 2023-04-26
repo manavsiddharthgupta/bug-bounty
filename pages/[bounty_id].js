@@ -8,6 +8,7 @@ import Link from "next/link";
 import Button from "@/ui/Button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
+import BountyDescription from "@/components/BountyDescriptionComponent";
 
 const EachBounty = ({ eachBounty }) => {
   const router = useRouter();
@@ -71,8 +72,7 @@ const EachBounty = ({ eachBounty }) => {
               })}
             </div>
             <div className={styles.mainSection}>
-              <h3>Bounty Description</h3>
-              <div className={styles.bountyDesc}></div>
+              {router.query.t === undefined && <BountyDescription />}
             </div>
           </Card>
         </section>

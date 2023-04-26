@@ -1,0 +1,51 @@
+.bountyType_title {
+  font-size: 1.15em;
+  margin-bottom: 3rem;
+}
+.bountyDesc_extras {
+  /* border: 1px solid black; */
+  display: flex;
+  margin: 1rem 0rem;
+  gap: 0.5rem;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.bountyDesc_extras h3 {
+  font-size: 0.9em;
+}
+.bountyDesc_extras p {
+  font-size: 0.75em;
+  font-weight: 500;
+}
+.bountyDesc {
+  margin-top: 0.5rem;
+  border: 1px solid blueviolet;
+  padding: 1rem;
+  border-radius: 8px;
+}
+.bountyDesc_outer h3 {
+  font-size: 0.9em;
+}
+.mdText {
+  font-size: 0.85em;
+  font-weight: 400;
+  color: rgb(71, 71, 71);
+}
+
+@media screen and (min-width: 720px) {
+  .bountyType_title {
+    font-size: 1.5em;
+  }
+  .bountyDesc_extras h3 {
+    font-size: 1.05em;
+  }
+  .bountyDesc_outer h3 {
+    font-size: 1.05em;
+  }
+  .bountyDesc_extras p {
+    font-size: 0.85em;
+  }
+  .bountyDesc {
+    padding: 1.25rem;
+  }
+}
