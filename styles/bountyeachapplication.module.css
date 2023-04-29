@@ -38,3 +38,9 @@
 .btn {
   margin: 0.25rem 0rem;
 }
+.connections {
+  /* border: 1px solid black; */
+  margin-top: 0.25em;
+  display: flex;
+  gap: 0.5rem;
+}

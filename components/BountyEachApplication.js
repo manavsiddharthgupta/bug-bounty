@@ -87,8 +87,11 @@ const BountyApplication = () => {
           {isShowmore ? "show more" : "show less"}
         </Button>
       )}
+      <div className={styles.connections}></div>
     </div>
   );
 };
 
 export default BountyApplication;
+
+// add connection links
