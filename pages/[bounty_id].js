@@ -10,8 +10,13 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
 import BountyDescription from "@/components/BountyDescriptionComponent";
 import BountyAllApplication from "@/components/BountyAllApplication";
+import { useState } from "react";
+import { createPortal } from "react-dom";
+import ApplyModal from "@/ui/ApplyModal";
+import { BackGroundModal } from "@/ui/Modal";
 
 const EachBounty = ({ eachBounty }) => {
+  const [showApplyModal, setShowModal] = useState(false);
   const router = useRouter();
 
   console.log(eachBounty);
@@ -21,6 +26,15 @@ const EachBounty = ({ eachBounty }) => {
     { name: "Applications", href: "/?t=applications" },
     { name: "Discussions", href: "/?t=discussions" },
   ];
+
+  const onShowApplyModal = () => {
+    setShowModal(true);
+  };
+
+  const onHideApplyModal = () => {
+    setShowModal(false);
+  };
+
   return (
     <>
       <Head>
@@ -54,7 +68,7 @@ const EachBounty = ({ eachBounty }) => {
                   style={{ cursor: "pointer" }}
                   icon={faPaperPlane}
                 />
-                <Button>Apply</Button>
+                <Button onClick={onShowApplyModal}>Apply</Button>
               </div>
             </div>
             <div className={styles.navlinks}>
@@ -79,6 +93,13 @@ const EachBounty = ({ eachBounty }) => {
           </Card>
         </section>
       </main>
+      {showApplyModal &&
+        createPortal(<ApplyModal />, document.getElementById("modal"))}
+      {showApplyModal &&
+        createPortal(
+          <BackGroundModal onSetCloseModal={onHideApplyModal} />,
+          document.getElementById("modal")
+        )}
     </>
   );
 };

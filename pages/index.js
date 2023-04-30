@@ -11,7 +11,8 @@ import Card from "@/ui/Card";
 import Button from "@/ui/Button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAdd } from "@fortawesome/free-solid-svg-icons";
-import { Modal, BackGroundModal } from "@/ui/Modal";
+import { BackGroundModal } from "@/ui/Modal";
+import CreateBountyModal from "@/components/CreateBountyModal";
 
 const bountyTypeInitialState = {
   bountyType: "all",
@@ -123,7 +124,7 @@ export default function Home({ allBounties }) {
         </section>
       </main>
       {showCreateBountyModal &&
-        createPortal(<Modal />, document.getElementById("modal"))}
+        createPortal(<CreateBountyModal />, document.getElementById("modal"))}
       {showCreateBountyModal &&
         createPortal(
           <BackGroundModal onSetCloseModal={onCloseModal} />,

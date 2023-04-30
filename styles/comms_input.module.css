@@ -29,6 +29,21 @@
   outline: none;
   font-family: "Inter", sans-serif;
 }
+.labels {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.delete_icon {
+  color: rgba(53, 53, 53, 0.443);
+  transition: all 0.2s ease-in-out;
+  cursor: pointer;
+  margin-right: 0.2rem;
+  font-size: small;
+}
+.delete_icon:hover {
+  color: rgb(0, 0, 0);
+}
 @media screen and (min-width: 720px) {
   .outer_comms {
     gap: 2rem;

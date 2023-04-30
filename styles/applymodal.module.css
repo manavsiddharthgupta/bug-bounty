@@ -1,0 +1,26 @@
+.outer_applyModal {
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+.apply_textArea {
+  border: 0.5px solid rgb(0, 0, 0);
+  border-radius: 3px;
+  min-height: 105px;
+}
+.apply_input {
+  border: 0.5px solid rgb(0, 0, 0);
+  border-radius: 3px;
+}
+.communicationLink {
+  border: 1px solid black;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 0.5rem;
+}
+.add_button {
+  margin-top: 0.5rem;
+  width: fit-content;
+}

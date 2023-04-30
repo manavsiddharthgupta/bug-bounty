@@ -8,7 +8,6 @@ import useInputState from "@/hooks/useInputState";
 import TextArea from "@/ui/TextArea";
 import { useEffect, useState } from "react";
 import InputTags from "@/ui/InputTags";
-import CommunicationInput from "@/components/CommunicationInputComponent";
 import AmountInput from "@/components/AmountInput";
 import {
   custom,
@@ -18,6 +17,7 @@ import {
 } from "@/store/predefined-create-bounty-desc";
 import useTextAreaState from "@/hooks/useTextAreaState";
 import { bountyDataformat } from "@/store/createBountyconversion";
+import CommunicationComponent from "@/components/CommunicationComponent";
 
 const CreateBounty = () => {
   // states
@@ -25,10 +25,12 @@ const CreateBounty = () => {
   const [createBountyType, setBountyType] = useState(custom);
   const [tags, setTags] = useState([]);
   const [skillRequired, setSkillRequired] = useState([]);
-  const [communicationLink, setCommunicationLink] = useState({
-    type: "Discord",
-    link: "",
-  });
+  const [communicationLink, setCommunicationLink] = useState([
+    {
+      type: "Discord",
+      link: "",
+    },
+  ]);
   const [amount, setAmount] = useState(createBountyType.amt);
   const [isFormTouched, setFormTouched] = useState(false);
 
@@ -140,6 +142,11 @@ const CreateBounty = () => {
     });
   };
 
+  const allLinkTypes = [
+    { type: "Discord", placeholder: "Username #1323" },
+    { type: "Email", placeholder: "example@example.com" },
+  ];
+
   return (
     <>
       <Head>
@@ -217,11 +224,36 @@ const CreateBounty = () => {
                   type="text"
                 />
               )}
-
-              <CommunicationInput
-                value={communicationLink}
-                onSetCommunicationHandler={setCommunicationLink}
+              <CommunicationComponent
+                communicationLink={communicationLink}
+                setCommunicationLink={setCommunicationLink}
+                allLinkTypes={allLinkTypes}
               />
+
+              {/* <div className={styles.communicationLink}>
+                {communicationLink.map((link, index) => {
+                  return (
+                    <CommunicationInput
+                      id={index}
+                      key={index}
+                      value={link}
+                      onSetCommunicationHandler={setCommunicationLink}
+                      // CommunicationLinkprovide={allLinkTypes}
+                    />
+                  );
+                })}
+
+                <Button
+                  className={styles.add_button}
+                  onClick={() => {
+                    setCommunicationLink((prevState) => {
+                      return [...prevState, { type: "Discord", link: "" }];
+                    });
+                  }}
+                >
+                  Add
+                </Button>
+              </div> */}
               <AmountInput
                 value={amount}
                 onChange={(e) => {

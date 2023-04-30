@@ -1,15 +1,35 @@
 import Label from "../ui/Label";
 import styles from "../styles/comms_input.module.css";
 import List from "@/ui/List";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrash } from "@fortawesome/free-solid-svg-icons";
 
 const CommunicationInput = (props) => {
+  const allLinkTypes = [
+    { type: "Discord", placeholder: "Username #1323" },
+    { type: "Email", placeholder: "example@example.com" },
+  ];
+
   return (
     <List>
       <div className={styles.outer_comms}>
         <CommunicationType
+          id={props.id}
+          optionTypes={
+            props.CommunicationLinkprovide
+              ? props.CommunicationLinkprovide
+              : allLinkTypes
+          }
+          value={props.value}
           onSetCommunicationHandler={props.onSetCommunicationHandler}
         />
         <CommunicationLink
+          id={props.id}
+          optionTypes={
+            props.CommunicationLinkprovide
+              ? props.CommunicationLinkprovide
+              : allLinkTypes
+          }
           value={props.value}
           onSetCommunicationHandler={props.onSetCommunicationHandler}
         />
@@ -18,46 +38,95 @@ const CommunicationInput = (props) => {
   );
 };
 
-const CommunicationType = ({ onSetCommunicationHandler }) => {
+const CommunicationType = ({
+  id,
+  value,
+  optionTypes,
+  onSetCommunicationHandler,
+}) => {
   return (
     <div className={styles.comms_type}>
       <Label>Communication</Label>
       <select
+        value={value.type}
         onChange={(e) => {
           console.log(e.target.value);
           onSetCommunicationHandler((prevState) => {
-            return {
-              ...prevState,
+            console.log(prevState, id);
+            const linkData = {
+              ...prevState[id],
               type: e.target.value,
             };
+            const allNewDatalink = [...prevState];
+            allNewDatalink[id] = linkData;
+            console.log(allNewDatalink);
+            return [...allNewDatalink];
           });
         }}
         name="commType"
         id="comms"
       >
-        <option value="Discord">Discord</option>
-        <option value="Email">Email</option>
+        {optionTypes.map((linkType) => {
+          return (
+            <option key={linkType.type} value={linkType.type}>
+              {linkType.type}
+            </option>
+          );
+        })}
       </select>
     </div>
   );
 };
 
-const CommunicationLink = ({ value, onSetCommunicationHandler }) => {
+const CommunicationLink = ({
+  id,
+  optionTypes,
+  value,
+  onSetCommunicationHandler,
+}) => {
+  const selectedOption = optionTypes.find(
+    (linkType) => linkType.type === value.type
+  );
   return (
     <div className={styles.comms_link}>
-      <Label>Discord</Label>
+      <div className={styles.labels}>
+        <Label>{value.type}</Label>
+        <FontAwesomeIcon
+          onClick={() => {
+            if (value.length === 1) {
+              return;
+            }
+            onSetCommunicationHandler((prevState) => {
+              if (prevState.length === 1) {
+                return [...prevState];
+              }
+              const allNewDatalink = [
+                ...prevState.slice(0, id),
+                ...prevState.slice(id + 1, prevState.length),
+              ];
+              console.log(allNewDatalink);
+              return [...allNewDatalink];
+            });
+          }}
+          icon={faTrash}
+          className={styles.delete_icon}
+        />
+      </div>
       <input
+        value={value.link}
         onChange={(e) => {
+          console.log(e.target.value);
           onSetCommunicationHandler((prevState) => {
-            return {
-              ...prevState,
+            const linkData = {
+              ...prevState[id],
               link: e.target.value,
             };
+            const allNewDatalink = [...prevState];
+            allNewDatalink[id] = linkData;
+            return [...allNewDatalink];
           });
         }}
-        placeholder={
-          value.type === "Discord" ? "Username #1323" : "example@example.com"
-        }
+        placeholder={selectedOption.placeholder}
         type="text"
       />
     </div>

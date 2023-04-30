@@ -8,6 +8,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import BountyType from "./CreateBountyModalTypes";
 import { useState } from "react";
+import { Modal } from "@/ui/Modal";
 
 const CreateBountyModal = () => {
   const [selectedBountyType, setBountyType] = useState(null);
@@ -54,32 +55,34 @@ const CreateBountyModal = () => {
   };
 
   return (
-    <div className={styles.modal_outerlayer}>
-      <h1>Create Bounty Modal</h1>
-      <ul className={styles.choose_bountyTypes}>
-        {allBountyTypes.map((eachTypes) => {
-          return (
-            <BountyType
-              id={eachTypes.id}
-              key={eachTypes.id}
-              title={eachTypes.title}
-              subtitle={eachTypes.subTitle}
-              expectedPrice={eachTypes.expectedPrice}
-              titleIcon={eachTypes.titleIcon}
-              onClick={onSelectBountyTypes}
-              styling={
-                selectedBountyType === eachTypes.id
-                  ? { outline: "2px solid black" }
-                  : { outline: "none" }
-              }
-            />
-          );
-        })}
-      </ul>
-      <Button className={styles.createbounty_btn} onClick={onCreateBounty}>
-        Create Bounty
-      </Button>
-    </div>
+    <Modal>
+      <div className={styles.modal_outerlayer}>
+        <h1>Create Bounty Modal</h1>
+        <ul className={styles.choose_bountyTypes}>
+          {allBountyTypes.map((eachTypes) => {
+            return (
+              <BountyType
+                id={eachTypes.id}
+                key={eachTypes.id}
+                title={eachTypes.title}
+                subtitle={eachTypes.subTitle}
+                expectedPrice={eachTypes.expectedPrice}
+                titleIcon={eachTypes.titleIcon}
+                onClick={onSelectBountyTypes}
+                styling={
+                  selectedBountyType === eachTypes.id
+                    ? { outline: "2px solid black" }
+                    : { outline: "none" }
+                }
+              />
+            );
+          })}
+        </ul>
+        <Button className={styles.createbounty_btn} onClick={onCreateBounty}>
+          Create Bounty
+        </Button>
+      </div>
+    </Modal>
   );
 };
 
