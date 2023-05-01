@@ -35,6 +35,11 @@ const EachBounty = ({ eachBounty }) => {
     setShowModal(false);
   };
 
+  const onCopyUrl = () => {
+    navigator.clipboard.writeText(window.location.href);
+    alert("Copied to clipboard");
+  };
+
   return (
     <>
       <Head>
@@ -65,6 +70,7 @@ const EachBounty = ({ eachBounty }) => {
               </div>
               <div className={styles.share_apply}>
                 <FontAwesomeIcon
+                  onClick={onCopyUrl}
                   style={{ cursor: "pointer" }}
                   icon={faPaperPlane}
                 />
@@ -135,3 +141,5 @@ export async function getStaticProps(context) {
     },
   };
 }
+
+// useTwitter Api to share the link as a tweet

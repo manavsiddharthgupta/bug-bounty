@@ -50,16 +50,13 @@ const CommunicationType = ({
       <select
         value={value.type}
         onChange={(e) => {
-          console.log(e.target.value);
           onSetCommunicationHandler((prevState) => {
-            console.log(prevState, id);
             const linkData = {
               ...prevState[id],
               type: e.target.value,
             };
             const allNewDatalink = [...prevState];
             allNewDatalink[id] = linkData;
-            console.log(allNewDatalink);
             return [...allNewDatalink];
           });
         }}
@@ -104,7 +101,6 @@ const CommunicationLink = ({
                 ...prevState.slice(0, id),
                 ...prevState.slice(id + 1, prevState.length),
               ];
-              console.log(allNewDatalink);
               return [...allNewDatalink];
             });
           }}
@@ -115,7 +111,6 @@ const CommunicationLink = ({
       <input
         value={value.link}
         onChange={(e) => {
-          console.log(e.target.value);
           onSetCommunicationHandler((prevState) => {
             const linkData = {
               ...prevState[id],
