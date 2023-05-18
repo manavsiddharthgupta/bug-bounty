@@ -14,41 +14,31 @@ import { faAdd } from "@fortawesome/free-solid-svg-icons";
 import { BackGroundModal } from "@/ui/Modal";
 import CreateBountyModal from "@/components/CreateBountyModal";
 
-const bountyTypeInitialState = {
-  bountyType: "all",
-  pageTitle: "",
-  allBounty: [],
-  myPostedBounty: [],
-  assignedBounty: [],
-};
-
 const bountyReducerFunc = (state, action) => {
-  if (action.type === "TYPE") {
-    // ----Logic
-
-    return {
-      ...state,
-      bountyType: action.payload,
-    };
-  } else if (action.type === "PAGE_TITLE") {
+  if (action.type === "SET_ALL_BOUNTY") {
     // ---Logic
 
     return {
       ...state,
-      pageTitle: action.payload,
+      bountyType: action.payload.bountyType,
+      pageTitle: action.payload.pageTitle,
     };
-  } else if (action.type === "SET_ALL_BOUNTY") {
-    // ---Logic
-
-    return {};
   } else if (action.type === "SET_POSTED_BOUNTY") {
     // ---Logic
 
-    return {};
+    return {
+      ...state,
+      bountyType: action.payload.bountyType,
+      pageTitle: action.payload.pageTitle,
+    };
   } else if (action.type === "SET_ASSIGNED_BOUNTY") {
     // ---Logic
 
-    return {};
+    return {
+      ...state,
+      bountyType: action.payload.bountyType,
+      pageTitle: action.payload.pageTitle,
+    };
   } else {
     return {
       ...state,
@@ -57,11 +47,19 @@ const bountyReducerFunc = (state, action) => {
 };
 
 export default function Home({ allBounties }) {
+  const bountyTypeInitialState = {
+    bountyType: "",
+    pageTitle: "",
+    fetchedBounty: allBounties,
+  };
+
   const [bountiesType, DispatchBountyTypefunc] = useReducer(
     bountyReducerFunc,
     bountyTypeInitialState
   );
   const [showCreateBountyModal, setModalState] = useState(false);
+
+  // console.log(bountiesType);
 
   const router = useRouter();
 
@@ -69,20 +67,32 @@ export default function Home({ allBounties }) {
     // use to make page more dynamic base on query parameter ----
 
     if (router.query?.t === "myposted") {
-      DispatchBountyTypefunc({ type: "TYPE", payload: "myposted" });
       DispatchBountyTypefunc({
-        type: "PAGE_TITLE",
-        payload: "My Posted Bount",
+        type: "SET_POSTED_BOUNTY",
+        payload: {
+          bountyType: "myposted",
+          pageTitle: "My Posted Bounty",
+          fetchedBounty: [],
+        },
       });
     } else if (router.query?.t === "assigned") {
-      DispatchBountyTypefunc({ type: "TYPE", payload: "assigned" });
       DispatchBountyTypefunc({
-        type: "PAGE_TITLE",
-        payload: "My Assigned Bounty",
+        type: "SET_ASSIGNED_BOUNTY",
+        payload: {
+          bountyType: "assigned",
+          pageTitle: "My Assigned Bounty",
+          fetchedBounty: [],
+        },
       });
     } else {
-      DispatchBountyTypefunc({ type: "TYPE", payload: "all" });
-      DispatchBountyTypefunc({ type: "PAGE_TITLE", payload: "All Bounty" });
+      DispatchBountyTypefunc({
+        type: "SET_ALL_BOUNTY",
+        payload: {
+          bountyType: "all",
+          pageTitle: "All Bounty",
+          fetchedBounty: [],
+        },
+      });
     }
   }, [router.query?.t]);
 
@@ -136,11 +146,12 @@ export default function Home({ allBounties }) {
 
 export async function getStaticProps(context) {
   // temprorary code need changes (error handling not implemented) ----
-  const res = await fetch("http://localhost:3004/api-bounties");
+  const res = await fetch("http://localhost:3002/bounties");
   const data = await res.json();
   return {
     props: {
-      allBounties: data,
+      allBounties: data.test,
     },
+    revalidate: 2,
   };
 }

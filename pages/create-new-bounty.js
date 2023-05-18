@@ -115,7 +115,7 @@ const CreateBounty = () => {
     if (router.query.type === "web-app") {
       figmaLink = bountyFigmaLinkRef?.current?.value;
     }
-    bountyDataformat(
+    const data = bountyDataformat(
       bountyTitleRef?.current?.value,
       bountySubTitleValue,
       bountyDescriptionValue,
@@ -128,6 +128,27 @@ const CreateBounty = () => {
       amount,
       router.query.type
     );
+
+    const options = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    };
+
+    fetch("http://localhost:3002/bounties", options)
+      .then((res) => {
+        return res.json();
+      })
+      .then((result) => {
+        console.log(result);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
+    router.push("/");
   };
 
   const onCreateTag = (val) => {

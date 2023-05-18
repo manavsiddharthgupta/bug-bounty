@@ -19,13 +19,20 @@ const EachBounty = ({ eachBounty }) => {
   const [showApplyModal, setShowModal] = useState(false);
   const router = useRouter();
 
-  console.log(eachBounty);
+  if (router.isFallback) {
+    return <h1>Loading...</h1>;
+  }
+
+  // console.log(eachBounty);
   const currRoute = router.query.t ? `/?t=${router.query.t}` : "/";
   const navLinks = [
     { name: "Details", href: "/" },
     { name: "Applications", href: "/?t=applications" },
     { name: "Discussions", href: "/?t=discussions" },
   ];
+
+  let date = new Date(eachBounty.openedOn);
+  let postedOn = `${date.getDate()}-${date.getMonth()}-${date.getFullYear()}`;
 
   const onShowApplyModal = () => {
     setShowModal(true);
@@ -54,7 +61,7 @@ const EachBounty = ({ eachBounty }) => {
           <Card>
             <div className={styles.price_status}>
               <h1>Earn {eachBounty.price}</h1>
-              <Tag className={styles.tags}>{eachBounty.status}</Tag>
+              <Tag className={styles.tags}>{eachBounty.bountyStatus}</Tag>
             </div>
             <h2 className={styles.title}>{eachBounty.title}</h2>
             <div className={styles.outer_user_data}>
@@ -66,7 +73,7 @@ const EachBounty = ({ eachBounty }) => {
                 >
                   @{eachBounty.openedBy}
                 </Link>
-                <span>Posted On {eachBounty.openedOn}</span>
+                <span>Posted On {postedOn}</span>
               </div>
               <div className={styles.share_apply}>
                 <FontAwesomeIcon
@@ -114,30 +121,33 @@ export default EachBounty;
 
 export async function getStaticPaths() {
   // temporary code (need to implement error handling) -----
-  const res = await fetch("http://localhost:3004/api-bounties");
+  const res = await fetch("http://localhost:3002/bounties");
   const data = await res.json();
-  const paths = data.map((bounty) => {
+  const paths = data.test.map((bounty) => {
     return {
-      params: { bounty_id: `${bounty.id}` },
+      params: { bounty_id: `${bounty._id}` },
     };
   });
   return {
-    paths: paths,
-    fallback: false,
+    paths: paths.slice(0, 3),
+    fallback: true,
   };
 }
 
 export async function getStaticProps(context) {
   // temporary code (need to implement error handling) -----
   const { params } = context;
-  const res = await fetch(
-    `http://localhost:3004/api-bounties/${params.bounty_id}`
-  );
+  const res = await fetch(`http://localhost:3002/bounties/${params.bounty_id}`);
   const data = await res.json();
 
+  if (!data.bountyData) {
+    return {
+      notFound: true,
+    };
+  }
   return {
     props: {
-      eachBounty: data,
+      eachBounty: data.bountyData,
     },
   };
 }

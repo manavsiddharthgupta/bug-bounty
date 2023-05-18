@@ -7,7 +7,7 @@ import Link from "next/link";
 const AllBounties = ({ allBountyData }) => {
   let allBountyComponent = allBountyData.map((each) => {
     return (
-      <Link key={each.id} href={`/${each.id}`}>
+      <Link key={each._id} href={`/${each._id}`}>
         <Bounty eachBountyData={each} />
       </Link>
     );

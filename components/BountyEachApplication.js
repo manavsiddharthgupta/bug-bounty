@@ -9,7 +9,6 @@ const BountyApplication = () => {
   useEffect(() => {
     const totalheight = detailsRef.current.clientHeight;
     const lineHeight = 20.8;
-    console.log("hello");
     if (totalheight / lineHeight > 4.0) {
       setOverflowing(true);
       setShowmore(true);

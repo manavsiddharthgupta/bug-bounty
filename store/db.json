@@ -301,5 +301,228 @@
       "openedOn": "May 30th",
       "applicants": 10
     }
+  ],
+  "applications": [
+    {
+      "_id": "kjshf82h3",
+      "userProfile": {
+        "imageSrc": "",
+        "username": "@user1"
+      },
+      "postedDate": "2022-04-10T14:23:05.000Z",
+      "details": "Hello, I am a full-stack developer with expertise in Angular and Node.js. I have previously worked on several chatbot projects and have experience in integrating with various messaging platforms. I can develop a chatbot for Canvas LMS as per your requirements. Please contact me via email or Discord for further discussion.",
+      "connections": {
+        "email": "user1@example.com",
+        "discord": "user1#1234",
+        "twitter": ""
+      },
+      "bountyId": 7
+    },
+    {
+      "_id": "djshf39f2",
+      "userProfile": {
+        "imageSrc": "",
+        "username": "@user8"
+      },
+      "postedDate": "2022-05-01T09:45:22.000Z",
+      "details": "I am a freelance developer with extensive experience in chatbot development. I have previously worked with Canvas API and can develop a chatbot for your Canvas LMS. The chatbot will have features to log messages, remember students, and preserve context between sessions. Please contact me via email or Discord for further discussion.",
+      "connections": {
+        "email": "user8@example.com",
+        "discord": "user8#1234",
+        "twitter": ""
+      },
+      "bountyId": 7
+    },
+    {
+      "_id": "kduf83hf2",
+      "userProfile": {
+        "imageSrc": "",
+        "username": "@user2"
+      },
+      "postedDate": "2022-03-20T17:32:10.000Z",
+      "details": "I am a software developer with experience in building chatbots using the Dialogflow platform. I can create a chatbot for your Canvas LMS that will assist students in accessing course materials and provide personalized support. Please contact me via email or Discord for further discussion.",
+      "connections": {
+        "email": "user2@example.com",
+        "discord": "user2#1234",
+        "twitter": "user2"
+      },
+      "bountyId": 7
+    },
+    {
+      "_id": "sdfasdasd12",
+      "userProfile": {
+        "imageSrc": "",
+        "username": "@user1"
+      },
+      "postedDate": "2022-05-15T12:00:00.000Z",
+      "details": "I am a software developer with over 5 years of experience in developing web applications. I have experience with HTML, CSS, JavaScript, and Python. I am confident that I can develop a responsive and user-friendly dashboard for your company. Please contact me if you have any questions or would like to discuss this opportunity further.",
+      "connections": {
+        "email": "user1@example.com",
+        "discord": "user1#1234",
+        "linkedin": "user1"
+      },
+      "bountyId": 1
+    },
+    {
+      "_id": "dfgdfg345",
+      "userProfile": {
+        "imageSrc": "",
+        "username": "@user2"
+      },
+      "postedDate": "2022-05-15T13:30:00.000Z",
+      "details": "I am a data scientist with experience in Python, R, and SQL. I have worked on several projects involving data analysis and machine learning. I am confident that I can build a model to predict the sales of your products. Please contact me if you are interested in working with me.",
+      "connections": {
+        "email": "user2@example.com",
+        "linkedin": "user2"
+      },
+      "bountyId": 2
+    },
+    {
+      "_id": "ertret34t",
+      "userProfile": {
+        "imageSrc": "",
+        "username": "@user3"
+      },
+      "postedDate": "2022-05-16T09:00:00.000Z",
+      "details": "I am a graphic designer with experience in Adobe Photoshop and Illustrator. I have worked on several projects including logo design, web design, and branding. I am confident that I can design a logo that represents your brand and resonates with your audience. Please contact me if you are interested in working with me.",
+      "connections": {
+        "email": "user3@example.com",
+        "instagram": "user3"
+      },
+      "bountyId": 3
+    },
+    {
+      "_id": "wqwewqesfsqgh45",
+      "userProfile": {
+        "imageSrc": "",
+        "username": "@user4"
+      },
+      "postedDate": "2022-05-16T14:30:00.000Z",
+      "details": "I am a full-stack developer with experience in React, Node.js, and MongoDB. I have worked on several projects including e-commerce websites, social networks, and web applications. I am confident that I can build a scalable and performant web application for your company. Please contact me if you are interested in working with me.",
+      "connections": {
+        "email": "user4@example.com",
+        "github": "user4",
+        "linkedin": "user4"
+      },
+      "bountyId": 4
+    },
+    {
+      "_id": "sdsj98s34rsd",
+      "userProfile": {
+        "imageSrc": "",
+        "username": "@user2"
+      },
+      "postedDate": "2022-05-14T08:30:00.000Z",
+      "details": "I have experience with web scraping and can help you extract the information you need from the website. I can use Python's Beautiful Soup library and Selenium for this task. Additionally, I can provide the data in any format you require, such as CSV or JSON. Please contact me if you're interested in working with me. I'm available to start immediately.",
+      "connections": {
+        "email": "user2@example.com",
+        "discord": "user2#5678",
+        "twitter": "user2"
+      },
+      "bountyId": 5
+    },
+    {
+      "_id": "djshf39faade32",
+      "userProfile": {
+        "imageSrc": "",
+        "username": "@user8"
+      },
+      "postedDate": "2022-05-01T09:45:22.000Z",
+      "details": "I am a freelance developer with extensive experience in chatbot development. I have previously worked with Canvas API and can develop a chatbot for your Canvas LMS. The chatbot will have features to log messages, remember students, and preserve context between sessions. Please contact me via email or Discord for further discussion.",
+      "connections": {
+        "email": "user8@example.com",
+        "discord": "user8#1234",
+        "twitter": ""
+      },
+      "bountyId": 1
+    },
+    {
+      "_id": "kduf83hertfsf2",
+      "userProfile": {
+        "imageSrc": "",
+        "username": "@user2"
+      },
+      "postedDate": "2022-03-20T17:32:10.000Z",
+      "details": "I am a software developer with experience in building chatbots using the Dialogflow platform. I can create a chatbot for your Canvas LMS that will assist students in accessing course materials and provide personalized support. Please contact me via email or Discord for further discussion.",
+      "connections": {
+        "email": "user2@example.com",
+        "discord": "user2#1234",
+        "twitter": "user2"
+      },
+      "bountyId": 2
+    },
+    {
+      "_id": "sdfasdassdad12",
+      "userProfile": {
+        "imageSrc": "",
+        "username": "@user1"
+      },
+      "postedDate": "2022-05-15T12:00:00.000Z",
+      "details": "I am a software developer with over 5 years of experience in developing web applications. I have experience with HTML, CSS, JavaScript, and Python. I am confident that I can develop a responsive and user-friendly dashboard for your company. Please contact me if you have any questions or would like to discuss this opportunity further.",
+      "connections": {
+        "email": "user1@example.com",
+        "discord": "user1#1234",
+        "linkedin": "user1"
+      },
+      "bountyId": 3
+    },
+    {
+      "_id": "dfgdfg3erw45",
+      "userProfile": {
+        "imageSrc": "",
+        "username": "@user2"
+      },
+      "postedDate": "2022-05-15T13:30:00.000Z",
+      "details": "I am a data scientist with experience in Python, R, and SQL. I have worked on several projects involving data analysis and machine learning. I am confident that I can build a model to predict the sales of your products. Please contact me if you are interested in working with me.",
+      "connections": {
+        "email": "user2@example.com",
+        "linkedin": "user2"
+      },
+      "bountyId": 4
+    },
+    {
+      "_id": "ertret3gfdgt",
+      "userProfile": {
+        "imageSrc": "",
+        "username": "@user3"
+      },
+      "postedDate": "2022-05-16T09:00:00.000Z",
+      "details": "I am a graphic designer with experience in Adobe Photoshop and Illustrator. I have worked on several projects including logo design, web design, and branding. I am confident that I can design a logo that represents your brand and resonates with your audience. Please contact me if you are interested in working with me.",
+      "connections": {
+        "email": "user3@example.com",
+        "instagram": "user3"
+      },
+      "bountyId": 5
+    },
+    {
+      "_id": "wqwadeewqe45",
+      "userProfile": {
+        "imageSrc": "",
+        "username": "@user4"
+      },
+      "postedDate": "2022-05-16T14:30:00.000Z",
+      "details": "I am a full-stack developer with experience in React, Node.js, and MongoDB. I have worked on several projects including e-commerce websites, social networks, and web applications. I am confident that I can build a scalable and performant web application for your company. Please contact me if you are interested in working with me.",
+      "connections": {
+        "email": "user4@example.com",
+        "github": "user4",
+        "linkedin": "user4"
+      },
+      "bountyId": 6
+    },
+    {
+      "_id": "sdsj98dfgdssd",
+      "userProfile": {
+        "imageSrc": "",
+        "username": "@user2"
+      },
+      "postedDate": "2022-05-14T08:30:00.000Z",
+      "details": "I have experience with web scraping and can help you extract the information you need from the website. I can use Python's Beautiful Soup library and Selenium for this task. Additionally, I can provide the data in any format you require, such as CSV or JSON. Please contact me if you're interested in working with me. I'm available to start immediately.",
+      "connections": {
+        "email": "user2@example.com",
+        "discord": "user2#5678",
+        "twitter": "user2"
+      },
+      "bountyId": 3
+    }
   ]
 }

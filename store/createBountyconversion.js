@@ -15,8 +15,14 @@ export const bountyDataformat = (
 ) => {
   const date = new Date().toISOString();
   console.log(date);
+
+  const otherLinks = communicationLink.map((each) => {
+    const typo = {};
+    typo[each.type] = each.link;
+    return typo;
+  });
   const createbountyformattedData = {
-    id: uuidv4(),
+    _id: uuidv4(),
     price: `₹ ${amount}`,
     title: title,
     tags: tags,
@@ -25,14 +31,16 @@ export const bountyDataformat = (
     openedBy: "johndoe",
     openedOn: date,
     applicants: 0,
+    bountyStatus: "open",
     lastSubmissionDate: lastSubmissionDate,
     description: description,
     links: {
       githubLink: githubLink,
       figmaLink: figmaLink,
-      others: communicationLink,
+      others: otherLinks,
     },
     bountyType: bountytype,
   };
   console.log(createbountyformattedData);
+  return createbountyformattedData;
 };
