@@ -59,8 +59,6 @@ export default function Home({ allBounties }) {
   );
   const [showCreateBountyModal, setModalState] = useState(false);
 
-  // console.log(bountiesType);
-
   const router = useRouter();
 
   useEffect(() => {

@@ -22,17 +22,34 @@
   border: 1px solid blueviolet;
   padding: 1rem;
   border-radius: 8px;
-  font-size: small;
 }
 .bountyDesc_outer h3 {
   font-size: 0.9em;
 }
-.mdText {
+.mdx {
   font-size: 0.85em;
   font-weight: 400;
   color: rgb(71, 71, 71);
 }
-
+.mdx p {
+  padding: 0.25rem 0rem;
+}
+.mdx h1,
+.mdx h2,
+.mdx h3,
+.mdx h4,
+.mdx h5,
+.mdx h6 {
+  padding: 0.5rem 0rem;
+  font-weight: 600;
+}
+.mdx ul {
+  padding: 0.25rem 0rem;
+  margin-left: 2rem;
+}
+.mdx li {
+  list-style: disc;
+}
 @media screen and (min-width: 720px) {
   .bountyType_title {
     font-size: 1.5em;

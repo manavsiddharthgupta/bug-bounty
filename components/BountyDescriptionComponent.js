@@ -1,19 +1,14 @@
 import styles from "../styles/bountydescription.module.css";
-import GetHelp from "../store/gethelp.mdx";
-import Custom from "../store/custom.mdx";
-import WebApp from "../store/webapp.mdx";
-import Tools from "../store/tool.mdx";
+import ReactMarkdown from "react-markdown";
 
-const BountyDescription = () => {
-  const reqSkills = ["Machine Learning", "WebApp", "React"];
-  const tags = ["React", "Javascript", "node", "css"];
+const BountyDescription = ({ bountyData }) => {
   return (
     <>
       <h2 className={styles.bountyType_title}>Build An App For Others</h2>
       <div className={styles.bountyDesc_extras}>
         <h3>Required Skills:</h3>
         <p>
-          {reqSkills.reduce((iter, skill) => {
+          {bountyData.requiredSkills.reduce((iter, skill) => {
             return iter + ", " + skill;
           })}
         </p>
@@ -21,7 +16,7 @@ const BountyDescription = () => {
       <div className={styles.bountyDesc_extras}>
         <h3>Tags:</h3>
         <p>
-          {tags.reduce((iter, skill) => {
+          {bountyData.tags.reduce((iter, skill) => {
             return iter + ", " + skill;
           })}
         </p>
@@ -32,7 +27,9 @@ const BountyDescription = () => {
       <div className={styles.bountyDesc_outer}>
         <h3>Bounty Description:</h3>
         <div className={styles.bountyDesc}>
-          <Custom />
+          <ReactMarkdown className={styles.mdx}>
+            {bountyData.description}
+          </ReactMarkdown>
         </div>
       </div>
     </>

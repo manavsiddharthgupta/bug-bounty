@@ -23,7 +23,7 @@ const EachBounty = ({ eachBounty }) => {
     return <h1>Loading...</h1>;
   }
 
-  // console.log(eachBounty);
+  console.log(eachBounty);
   const currRoute = router.query.t ? `/?t=${router.query.t}` : "/";
   const navLinks = [
     { name: "Details", href: "/" },
@@ -100,14 +100,22 @@ const EachBounty = ({ eachBounty }) => {
               })}
             </div>
             <div className={styles.mainSection}>
-              {router.query.t === undefined && <BountyDescription />}
+              {router.query.t === undefined && (
+                <BountyDescription bountyData={eachBounty} />
+              )}
               {router.query.t === "applications" && <BountyAllApplication />}
             </div>
           </Card>
         </section>
       </main>
       {showApplyModal &&
-        createPortal(<ApplyModal />, document.getElementById("modal"))}
+        createPortal(
+          <ApplyModal
+            totalApplicants={eachBounty.applicants}
+            onSetCloseModal={onHideApplyModal}
+          />,
+          document.getElementById("modal")
+        )}
       {showApplyModal &&
         createPortal(
           <BackGroundModal onSetCloseModal={onHideApplyModal} />,

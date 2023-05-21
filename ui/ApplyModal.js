@@ -3,18 +3,21 @@ import Input from "./Input";
 import { Modal } from "./Modal";
 import TextArea from "./TextArea";
 import { useState } from "react";
+import { useRouter } from "next/router";
 import Button from "./Button";
 import CommunicationComponent from "@/components/CommunicationComponent";
 import useTextAreaState from "@/hooks/useTextAreaState";
 import useInputState from "@/hooks/useInputState";
 
-const ApplyModal = () => {
+const ApplyModal = ({ totalApplicants, onSetCloseModal }) => {
   const [communicationLink, setCommunicationLink] = useState([
     {
       type: "Discord",
       link: "",
     },
   ]);
+
+  const router = useRouter();
 
   const {
     textState: applicationMessage,
@@ -38,6 +41,39 @@ const ApplyModal = () => {
     { type: "LinkedIn", placeholder: "Username" },
     { type: "Website", placeholder: "https://example.com" },
   ];
+
+  const sendApplicationFunc = () => {
+    const data = {
+      applicationData: {
+        applicationMessage,
+        communicationLink,
+        applicationEmail: applicationEmail.current.value,
+        bountyId: router.query.bounty_id,
+      },
+      updatedBountyApplicants: totalApplicants + 1,
+    };
+    const options = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    };
+
+    fetch("http://localhost:3002/applications", options)
+      .then((res) => {
+        return res.json();
+      })
+      .then((result) => {
+        console.log(result);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
+    onSetCloseModal();
+  };
+
   return (
     <Modal>
       <div className={styles.outer_applyModal}>
@@ -61,17 +97,7 @@ const ApplyModal = () => {
           setCommunicationLink={setCommunicationLink}
           allLinkTypes={allLinkTypes}
         />
-        <Button
-          onClick={() => {
-            console.log("Send Application", {
-              applicationMessage,
-              communicationLink,
-              applicationEmail: applicationEmail.current.value,
-            });
-          }}
-        >
-          Send Application
-        </Button>
+        <Button onClick={sendApplicationFunc}>Send Application</Button>
       </div>
     </Modal>
   );
