@@ -39,6 +39,13 @@ const bountyReducerFunc = (state, action) => {
       bountyType: action.payload.bountyType,
       pageTitle: action.payload.pageTitle,
     };
+  } else if (action.type === "RE_FETCH_BOUNTY") {
+    // ---Logic
+
+    return {
+      ...state,
+      fetchedBounty: action.payload.fetchedBounty,
+    };
   } else {
     return {
       ...state,
@@ -58,13 +65,32 @@ export default function Home({ allBounties }) {
     bountyTypeInitialState
   );
   const [showCreateBountyModal, setModalState] = useState(false);
+  const [isLoading, setLoadingState] = useState(false);
+
+  console.log(bountiesType, isLoading);
 
   const router = useRouter();
 
   useEffect(() => {
+    const fetchAllBounty = async () => {
+      setLoadingState(true);
+      const res = await fetch("http://localhost:3002/bounties");
+      const data = await res.json();
+      DispatchBountyTypefunc({
+        type: "RE_FETCH_BOUNTY",
+        payload: {
+          fetchedBounty: data.test,
+        },
+      });
+      setLoadingState(false);
+    };
+    fetchAllBounty();
+  }, []);
+
+  useEffect(() => {
     // use to make page more dynamic base on query parameter ----
 
-    if (router.query?.t === "myposted") {
+    if (router.query.t === "myposted") {
       DispatchBountyTypefunc({
         type: "SET_POSTED_BOUNTY",
         payload: {
@@ -128,7 +154,11 @@ export default function Home({ allBounties }) {
               </Button>
             </div>
           </Card>
-          <AllBounties allBountyData={allBounties} />
+
+          <AllBounties
+            isLoading={isLoading}
+            allBountyData={bountiesType.fetchedBounty}
+          />
         </section>
       </main>
       {showCreateBountyModal &&

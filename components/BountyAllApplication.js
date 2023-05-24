@@ -1,28 +1,32 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import styles from "../styles/BountyAllApplication.module.css";
 import BountyApplication from "./BountyEachApplication";
 import { useRouter } from "next/router";
 
-const BountyAllApplication = () => {
-  const [bountyAllApplication, setBountyApplication] = useState([]);
-  const [isLoading, setLoadingState] = useState(true);
-
+const BountyAllApplication = ({
+  bountyAllApplication,
+  isLoading,
+  onSetBountyApplication,
+  onSetLoadingState,
+}) => {
   console.log(bountyAllApplication);
 
   const router = useRouter();
 
-  useEffect(() => {
-    const fetchBountyApplication = async () => {
-      const res = await fetch(
-        `http://localhost:3002/applications?bountyId=${router.query.bounty_id}`
-      );
-      const data = await res.json();
-      setBountyApplication(data.test);
-      console.log("All BountyAllApplication");
-      setLoadingState(false);
-    };
-    fetchBountyApplication();
+  const fetchBountyApplication = useCallback(async () => {
+    onSetLoadingState(true);
+    const res = await fetch(
+      `http://localhost:3002/applications?bountyId=${router.query.bounty_id}`
+    );
+    const data = await res.json();
+    onSetBountyApplication(data.test);
+    console.log("All BountyAllApplication");
+    onSetLoadingState(false);
   }, []);
+
+  useEffect(() => {
+    fetchBountyApplication();
+  }, [fetchBountyApplication]);
 
   if (isLoading) return <p>Loading...</p>;
 
@@ -36,7 +40,11 @@ const BountyAllApplication = () => {
           bountyAllApplication.map((bountyEachApplication) => {
             return (
               <BountyApplication
-                key={bountyEachApplication._id}
+                key={
+                  bountyEachApplication._id
+                    ? bountyEachApplication._id
+                    : bountyEachApplication.applicationEmail
+                }
                 applicationData={bountyEachApplication}
               />
             );

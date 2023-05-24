@@ -47,7 +47,7 @@ const BountyApplication = ({ applicationData }) => {
     <div className={styles.application_outer_div}>
       <div className={styles.application_userprofile}>
         <img src="" alt="_pfp" />
-        <p>@manavsiddgupta</p>
+        <p>{applicationData.applicationEmail}</p>
       </div>
       <p className={styles.application_postedDate}>Applied 2 days ago</p>
       <p

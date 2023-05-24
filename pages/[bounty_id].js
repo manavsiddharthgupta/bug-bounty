@@ -17,6 +17,8 @@ import { BackGroundModal } from "@/ui/Modal";
 
 const EachBounty = ({ eachBounty }) => {
   const [showApplyModal, setShowModal] = useState(false);
+  const [allApplications, setBountyApplication] = useState([]);
+  const [isLoading, setLoadingState] = useState(true);
   const router = useRouter();
 
   if (router.isFallback) {
@@ -103,7 +105,14 @@ const EachBounty = ({ eachBounty }) => {
               {router.query.t === undefined && (
                 <BountyDescription bountyData={eachBounty} />
               )}
-              {router.query.t === "applications" && <BountyAllApplication />}
+              {router.query.t === "applications" && (
+                <BountyAllApplication
+                  bountyAllApplication={allApplications}
+                  isLoading={isLoading}
+                  onSetBountyApplication={setBountyApplication}
+                  onSetLoadingState={setLoadingState}
+                />
+              )}
             </div>
           </Card>
         </section>
@@ -113,6 +122,8 @@ const EachBounty = ({ eachBounty }) => {
           <ApplyModal
             totalApplicants={eachBounty.applicants}
             onSetCloseModal={onHideApplyModal}
+            onSetBountyApplication={setBountyApplication}
+            onSetLoadingState={setLoadingState}
           />,
           document.getElementById("modal")
         )}

@@ -9,7 +9,12 @@ import CommunicationComponent from "@/components/CommunicationComponent";
 import useTextAreaState from "@/hooks/useTextAreaState";
 import useInputState from "@/hooks/useInputState";
 
-const ApplyModal = ({ totalApplicants, onSetCloseModal }) => {
+const ApplyModal = ({
+  totalApplicants,
+  onSetCloseModal,
+  onSetBountyApplication,
+  onSetLoadingState,
+}) => {
   const [communicationLink, setCommunicationLink] = useState([
     {
       type: "Discord",
@@ -59,7 +64,7 @@ const ApplyModal = ({ totalApplicants, onSetCloseModal }) => {
       },
       body: JSON.stringify(data),
     };
-
+    onSetLoadingState(true);
     fetch("http://localhost:3002/applications", options)
       .then((res) => {
         return res.json();
@@ -70,7 +75,11 @@ const ApplyModal = ({ totalApplicants, onSetCloseModal }) => {
       .catch((err) => {
         console.log(err);
       });
-
+    onSetBountyApplication((prevState) => [
+      ...JSON.parse(JSON.stringify(prevState)),
+      data.applicationData,
+    ]);
+    onSetLoadingState(false);
     onSetCloseModal();
   };
 
@@ -104,28 +113,3 @@ const ApplyModal = ({ totalApplicants, onSetCloseModal }) => {
 };
 
 export default ApplyModal;
-
-// <div className={styles.communicationLink}>
-//   {communicationLink.map((link, index) => {
-//     return (
-//       <CommunicationInput
-//         id={index}
-//         key={index}
-//         value={link}
-//         onSetCommunicationHandler={setCommunicationLink}
-//         CommunicationLinkprovide={allLinkTypes}
-//       />
-//     );
-//   })}
-
-//   <Button
-//     className={styles.add_button}
-//     onClick={() => {
-//       setCommunicationLink((prevState) => {
-//         return [...prevState, { type: "Discord", link: "" }];
-//       });
-//     }}
-//   >
-//     Add
-//   </Button>
-// </div>

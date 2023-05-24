@@ -4,7 +4,7 @@ import FilterComponent from "./FilterComponent";
 import Bounty from "./Bounty";
 import Link from "next/link";
 
-const AllBounties = ({ allBountyData }) => {
+const AllBounties = ({ isLoading, allBountyData }) => {
   let allBountyComponent = allBountyData.map((each) => {
     return (
       <Link key={each._id} href={`/${each._id}`}>
@@ -21,7 +21,8 @@ const AllBounties = ({ allBountyData }) => {
     <Card>
       <div className={styles.bounty_parent_div}>
         <FilterComponent />
-        {allBountyComponent}
+        {isLoading && <p>Loading...</p>}
+        {!isLoading && allBountyComponent}
       </div>
     </Card>
   );
