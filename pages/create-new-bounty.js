@@ -18,6 +18,8 @@ import {
 import useTextAreaState from "@/hooks/useTextAreaState";
 import { bountyDataformat } from "@/store/createBountyconversion";
 import CommunicationComponent from "@/components/CommunicationComponent";
+import { useSession } from "next-auth/react";
+import Link from "next/link";
 
 const CreateBounty = () => {
   // states
@@ -109,6 +111,14 @@ const CreateBounty = () => {
     };
   }, [isFormTouched]);
 
+  const { data, status } = useSession();
+
+  if (status === "loading") {
+    return <h2>Loading...</h2>;
+  } else if (status === "unauthenticated") {
+    return <h2>You are not authorized</h2>;
+  }
+
   // functions
   const onCreateBountyFunc = () => {
     let figmaLink = null;
@@ -186,10 +196,10 @@ const CreateBounty = () => {
       >
         <Card>
           <div className={styles.outer_create_new_bounty}>
-            <Button className={styles.back_btn}>
+            <Link href="/" className={styles.back_btn}>
               <p>&larr;</p>
               <p>back to all bounties</p>
-            </Button>
+            </Link>
             <h1>Create a Bounty</h1>
             <section>
               <Input
@@ -281,7 +291,9 @@ const CreateBounty = () => {
                   setAmount(e.target.value);
                 }}
               />
-              <Button onClick={onCreateBountyFunc}>Create Bounty</Button>
+              <Button className={styles.createBtn} onClick={onCreateBountyFunc}>
+                Create Bounty
+              </Button>
             </section>
           </div>
         </Card>

@@ -1,8 +1,12 @@
 .modal_outerlayer {
-  padding: 1rem;
+  padding: 2rem;
   font-size: small;
   display: flex;
   flex-direction: column;
+  background-color: #d1ebfa;
+}
+.modal_outerlayer h1 {
+  color: #048ce0;
 }
 .choose_bountyTypes {
   display: flex;
@@ -10,8 +14,9 @@
   margin-top: 1rem;
 }
 .createbounty_btn {
-  margin-top: 2rem;
+  margin-top: 1rem;
   align-self: flex-end;
+  padding: 0.5rem 1rem 0.4rem 1rem;
 }
 @media screen and (min-width: 600px) {
   .choose_bountyTypes {

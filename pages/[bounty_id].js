@@ -14,12 +14,21 @@ import { useState } from "react";
 import { createPortal } from "react-dom";
 import ApplyModal from "@/ui/ApplyModal";
 import { BackGroundModal } from "@/ui/Modal";
+import { useSession } from "next-auth/react";
+import Chat from "@/components/Chat";
 
 const EachBounty = ({ eachBounty }) => {
   const [showApplyModal, setShowModal] = useState(false);
   const [allApplications, setBountyApplication] = useState([]);
   const [isLoading, setLoadingState] = useState(true);
   const router = useRouter();
+
+  const { data, status } = useSession();
+
+  let disableDiscussionLink = false;
+  if (status === "loading" || status === "unauthenticated") {
+    disableDiscussionLink = true;
+  }
 
   if (router.isFallback) {
     return <h1>Loading...</h1>;
@@ -68,13 +77,7 @@ const EachBounty = ({ eachBounty }) => {
             <h2 className={styles.title}>{eachBounty.title}</h2>
             <div className={styles.outer_user_data}>
               <div className={styles.user_date}>
-                <Link
-                  className={styles.user_link}
-                  href={`/${router.query.bounty_id}`} // link will get changed
-                  passHref
-                >
-                  @{eachBounty.openedBy}
-                </Link>
+                <p className={styles.user_link}>@{eachBounty.openedBy}</p>
                 <span>Posted On {postedOn}</span>
               </div>
               <div className={styles.share_apply}>
@@ -82,8 +85,16 @@ const EachBounty = ({ eachBounty }) => {
                   onClick={onCopyUrl}
                   style={{ cursor: "pointer" }}
                   icon={faPaperPlane}
+                  className={styles.share_icon}
                 />
-                <Button onClick={onShowApplyModal}>Apply</Button>
+                {status === "authenticated" && (
+                  <Button
+                    className={styles.apply_btn}
+                    onClick={onShowApplyModal}
+                  >
+                    Apply
+                  </Button>
+                )}
               </div>
             </div>
             <div className={styles.navlinks}>
@@ -95,6 +106,11 @@ const EachBounty = ({ eachBounty }) => {
                       link.href === currRoute ? styles.actlinks : styles.links
                     }
                     href={router.query.bounty_id + link.href}
+                    style={
+                      disableDiscussionLink && link.name === "Discussions"
+                        ? { pointerEvents: "none", color: "GrayText" }
+                        : {}
+                    }
                   >
                     {link.name}
                   </Link>
@@ -113,11 +129,13 @@ const EachBounty = ({ eachBounty }) => {
                   onSetLoadingState={setLoadingState}
                 />
               )}
+              {router.query.t === "discussions" && <Chat />}
             </div>
           </Card>
         </section>
       </main>
       {showApplyModal &&
+        status === "authenticated" &&
         createPortal(
           <ApplyModal
             totalApplicants={eachBounty.applicants}
@@ -128,6 +146,7 @@ const EachBounty = ({ eachBounty }) => {
           document.getElementById("modal")
         )}
       {showApplyModal &&
+        status === "authenticated" &&
         createPortal(
           <BackGroundModal onSetCloseModal={onHideApplyModal} />,
           document.getElementById("modal")

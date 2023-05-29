@@ -15,7 +15,7 @@ const Bounty = ({ eachBountyData }) => {
       </div>
       <div className={styles.bounty_title}>
         <h2>{eachBountyData.title}</h2>
-        <div>
+        <div className={styles.bountyAllTags}>
           {/* random change color */}
           {eachBountyData.tags.map((eachtag) => {
             return (

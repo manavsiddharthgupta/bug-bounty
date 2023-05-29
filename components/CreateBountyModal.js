@@ -71,7 +71,7 @@ const CreateBountyModal = () => {
                 onClick={onSelectBountyTypes}
                 styling={
                   selectedBountyType === eachTypes.id
-                    ? { outline: "2px solid black" }
+                    ? { outline: "2px solid #48565f" }
                     : { outline: "none" }
                 }
               />

@@ -16,6 +16,8 @@
   outline: none;
   font-family: "Inter", sans-serif;
   width: 100%;
+  border: none;
+  background-color: #c1d7e6;
 }
 .comms_type {
   display: flex;
@@ -28,6 +30,8 @@
   font-size: 1rem;
   outline: none;
   font-family: "Inter", sans-serif;
+  border: none;
+  background-color: #c1d7e6;
 }
 .labels {
   display: flex;

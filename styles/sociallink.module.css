@@ -1,0 +1,19 @@
+.link {
+  padding: 0.2rem 0.5rem 0.3rem 0.5rem;
+  border-radius: 10px;
+  background-color: #a0b9ca;
+  cursor: pointer;
+  color: #313a41;
+}
+.link:hover {
+  background-color: #aec6d6;
+}
+.link span {
+  font-size: 0.75rem;
+  text-transform: capitalize;
+  margin-right: 0.25rem;
+}
+.icon {
+  font-size: 0.8rem;
+  color: #313a41;
+}

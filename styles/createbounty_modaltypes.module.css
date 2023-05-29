@@ -1,9 +1,9 @@
 .each_bountyTypes {
-  border: 1px solid gray;
+  background-color: #c3dbea;
   padding: 1rem;
   width: 100%;
   border-radius: 8px;
-  margin-top: 1rem;
+  margin-top: 0.7rem;
   height: fit-content;
   cursor: pointer;
 }
@@ -16,11 +16,12 @@
   margin-top: 1rem;
   font-size: small;
   font-weight: 500;
+  color: #48565f;
 }
 .bounty_type_expPrice {
   margin-top: 1rem;
   font-weight: 500;
-  color: #5e5e5e;
+  color: #48565f;
 }
 
 @media screen and (min-width: 600px) {

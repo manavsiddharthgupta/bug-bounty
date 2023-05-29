@@ -19,8 +19,10 @@
   width: fit-content;
   padding: 6px 8px;
   border-radius: 20px;
-  background-color: rgb(5, 84, 134);
-  color: white;
+  font-weight: 600;
+  text-transform: capitalize;
+  background-color: #a0b9ca;
+  color: #313a41;
 }
 .title {
   font-size: medium;
@@ -30,7 +32,7 @@
 .user_link {
   color: black;
   font-size: 0.8rem;
-  font-weight: 500;
+  font-weight: 700;
 }
 .user_date {
   display: flex;
@@ -40,7 +42,8 @@
 }
 .user_date span {
   font-size: 0.75rem;
-  font-weight: 700;
+  font-weight: 400;
+  color: #374147;
 }
 .outer_user_data {
   display: flex;
@@ -51,30 +54,37 @@
 
 .share_apply {
   display: flex;
-  gap: 0.5rem;
+  gap: 1rem;
   align-items: center;
+}
+.share_icon {
+  font-size: 1.2rem;
+  color: #374147;
+}
+.apply_btn {
+  padding: 0.5rem 1rem 0.4rem 1rem !important;
 }
 
 .navlinks {
-  border-bottom: 2px solid black;
+  border-bottom: 1px solid #374147;
   margin: 1rem 0rem;
   padding: 0.5rem 0rem 0rem 0rem;
   display: flex;
-  /* gap: 0.5rem; */
   overflow-x: auto;
 }
 .links {
-  color: black;
+  color: #374147;
   font-size: 0.9em;
-  border-right: 1px solid black;
-  padding: 0rem 0.65em 0.15rem 0.65em;
+  border-right: 1px solid #98b5c7;
+  padding: 0.35rem 0.65em 0.25rem 0.65em;
 }
 .actlinks {
   color: black;
+  background-color: #bfd3e1;
   font-size: 0.9em;
-  border-bottom: 2px solid green;
-  border-right: 1px solid black;
-  padding: 0rem 0.65em 0.15rem 0.65em;
+  border-bottom: 2px solid #048ce0;
+  border-right: 1px solid #98b5c7;
+  padding: 0.35rem 0.65em 0.25rem 0.65em;
 }
 .mainSection {
   padding: 2rem 0rem;

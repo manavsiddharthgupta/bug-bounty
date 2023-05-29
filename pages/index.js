@@ -13,6 +13,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAdd } from "@fortawesome/free-solid-svg-icons";
 import { BackGroundModal } from "@/ui/Modal";
 import CreateBountyModal from "@/components/CreateBountyModal";
+import { useSession } from "next-auth/react";
 
 const bountyReducerFunc = (state, action) => {
   if (action.type === "SET_ALL_BOUNTY") {
@@ -67,8 +68,7 @@ export default function Home({ allBounties }) {
   const [showCreateBountyModal, setModalState] = useState(false);
   const [isLoading, setLoadingState] = useState(false);
 
-  console.log(bountiesType, isLoading);
-
+  const { data, status } = useSession();
   const router = useRouter();
 
   useEffect(() => {
@@ -143,15 +143,17 @@ export default function Home({ allBounties }) {
           <Card>
             <div className={styles.pageTitle_button}>
               <PageTitle>{bountiesType.pageTitle}</PageTitle>
-              <Button onClick={onHandleCreateButton} className={styles.btn}>
-                <FontAwesomeIcon
-                  style={{
-                    marginRight: "0.25rem",
-                  }}
-                  icon={faAdd}
-                />
-                create bounty
-              </Button>
+              {status === "authenticated" && (
+                <Button onClick={onHandleCreateButton} className={styles.btn}>
+                  <FontAwesomeIcon
+                    style={{
+                      marginRight: "0.25rem",
+                    }}
+                    icon={faAdd}
+                  />
+                  create bounty
+                </Button>
+              )}
             </div>
           </Card>
 

@@ -53,4 +53,5 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 - [ ] update state according to the all bounties type
 - [ ] infinite scroll
 - [ ] update filter logic
-- [ ] Backend logic
+- [x] Backend logic
+- [x] user centric/ authentication, authorization

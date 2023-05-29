@@ -12,24 +12,32 @@
 }
 .bountyDesc_extras h3 {
   font-size: 0.9em;
+  color: #374147;
 }
 .bountyDesc_extras p {
   font-size: 0.75em;
   font-weight: 500;
+  color: #374147;
+}
+.socialLinks {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
 }
 .bountyDesc {
   margin-top: 0.5rem;
-  border: 1px solid blueviolet;
+  background-color: #c3dbea;
   padding: 1rem;
   border-radius: 8px;
 }
 .bountyDesc_outer h3 {
   font-size: 0.9em;
+  color: #374147;
 }
 .mdx {
   font-size: 0.85em;
   font-weight: 400;
-  color: rgb(71, 71, 71);
+  color: #374147;
 }
 .mdx p {
   padding: 0.25rem 0rem;
@@ -42,6 +50,7 @@
 .mdx h6 {
   padding: 0.5rem 0rem;
   font-weight: 600;
+  color: black;
 }
 .mdx ul {
   padding: 0.25rem 0rem;

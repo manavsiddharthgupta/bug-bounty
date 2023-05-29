@@ -1,8 +1,9 @@
 .bounty {
-  margin: 1rem 0rem;
-  border: 1px solid red;
+  margin: 1.5rem 0rem;
+  /* border: 1px solid red; */
   padding: 2rem;
   border-radius: 8px;
+  background-color: #c3dbea;
 }
 .bounty_price_status_outer {
   /* border: 1px solid black; */
@@ -24,8 +25,8 @@
   width: fit-content;
   padding: 3px 8px;
   border-radius: 20px;
-  background-color: rgb(41, 5, 134);
-  color: white;
+  background-color: #a0b9ca;
+  color: #313a41;
 }
 .bounty_title {
   margin: 0.8rem 0rem;
@@ -41,9 +42,12 @@
   font-size: 1.2em;
   color: black;
 }
-.bounty_title div {
+.bountyAllTags {
   display: flex;
   gap: 0.2rem;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 .bounty_subTitle {
   font-weight: 500;
@@ -51,12 +55,12 @@
   white-space: nowrap;
   text-overflow: ellipsis;
   margin-bottom: 0.8rem;
-  color: black;
+  color: #374147;
 }
 .bounty_reqskills_title {
   font-weight: 600;
   font-size: small;
-  color: black;
+  color: #374147;
 }
 .extra_inf {
   display: flex;
@@ -69,7 +73,7 @@
 .extra_inf p {
   font-size: 0.75em;
   font-weight: 600;
-  color: black;
+  color: #374147;
 }
 .extra_inf div {
   display: flex;
@@ -79,9 +83,9 @@
 .extra_inf div span {
   font-size: smaller;
   font-weight: 700;
-  color: black;
+  color: #374147;
 }
 .user_icon {
   font-size: small;
-  color: black;
+  color: #374147;
 }

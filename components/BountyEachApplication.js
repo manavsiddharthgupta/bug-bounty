@@ -1,6 +1,7 @@
 import Button from "@/ui/Button";
 import styles from "../styles/bountyeachapplication.module.css";
 import { useEffect, useRef, useState } from "react";
+import SocialLink from "./SocialLink";
 const BountyApplication = ({ applicationData }) => {
   const [isOverflowing, setOverflowing] = useState(false);
   const [isShowmore, setShowmore] = useState(false);
@@ -66,7 +67,11 @@ const BountyApplication = ({ applicationData }) => {
           {isShowmore ? "show more" : "show less"}
         </Button>
       )}
-      <div className={styles.connections}></div>
+      <div className={styles.connections}>
+        {applicationData.communicationLink.map(({ type }) => {
+          return <SocialLink key={type}>{type}</SocialLink>;
+        })}
+      </div>
     </div>
   );
 };

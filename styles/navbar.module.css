@@ -5,9 +5,9 @@
   top: 0;
   width: 100%;
   height: 4em;
+  backdrop-filter: blur(10px);
 }
 .nav {
-  border: 1px solid black;
   display: flex;
   align-items: center;
   font-size: 0.75em;
@@ -15,6 +15,10 @@
   width: 100%;
   max-width: 1440px;
   padding: 0rem 2rem;
+  justify-content: space-between;
+}
+.nav h1 {
+  color: #048ce0;
 }
 .nav ul {
   display: none;
@@ -27,16 +31,38 @@
   font-weight: 400;
   cursor: pointer;
 }
+.nav ul li a {
+  color: #374147;
+}
+.authBtn {
+  font-size: medium;
+  font-weight: 400;
+  cursor: pointer;
+  color: #374147;
+}
+.authBtn:hover {
+  color: black;
+}
+.authNav {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.bars {
+  display: block;
+}
+@media screen and (min-width: 830px) {
+  .nav ul {
+    display: flex;
+  }
+  .bars {
+    display: none;
+  }
+}
 
 @media screen and (min-width: 720px) {
   .nav {
     padding: 0rem 6rem;
     font-size: 1rem;
-  }
-}
-
-@media screen and (min-width: 600px) {
-  .nav ul {
-    display: flex;
   }
 }

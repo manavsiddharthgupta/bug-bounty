@@ -30,12 +30,14 @@ const BountyAllApplication = ({
 
   if (isLoading) return <p>Loading...</p>;
 
+  // const test = ;
+
   return (
     <>
       <h1>Applications</h1>
       <div className={styles.allapplication_outer_div}>
         {bountyAllApplication.length === 0 ? (
-          <p>No Applicants</p>
+          <p className={styles.no_applicants}>No Applicants</p>
         ) : (
           bountyAllApplication.map((bountyEachApplication) => {
             return (

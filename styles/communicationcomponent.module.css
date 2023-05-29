@@ -1,5 +1,5 @@
 .communicationLink {
-  border: 1px solid black;
+  border: 1px solid #48565f;
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
@@ -8,4 +8,5 @@
 .add_button {
   margin-top: 0.5rem;
   width: fit-content;
+  padding: 0.4rem 1rem 0.3rem 1rem;
 }

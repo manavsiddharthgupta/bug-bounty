@@ -12,6 +12,16 @@
   display: flex;
   align-items: center;
   gap: 0.3rem;
+  cursor: pointer;
+  margin-bottom: 1rem;
+  padding: 0.2rem 0.6rem;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  background-color: #048ce0;
+  color: white;
+  width: fit-content;
+  font-size: small;
 }
 .back_btn p:first-child {
   margin-bottom: 0.15rem;
@@ -36,7 +46,9 @@
   margin-top: 0.5rem;
   width: fit-content;
 }
-
+.createBtn {
+  padding: 0.5rem 0rem;
+}
 @media screen and (min-width: 720px) {
   .outer_create_new_bounty h1 {
     font-size: 2rem;

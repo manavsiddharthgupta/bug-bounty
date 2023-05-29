@@ -1,5 +1,6 @@
 import styles from "../styles/bountydescription.module.css";
 import ReactMarkdown from "react-markdown";
+import SocialLink from "./SocialLink";
 
 const BountyDescription = ({ bountyData }) => {
   return (
@@ -23,6 +24,15 @@ const BountyDescription = ({ bountyData }) => {
       </div>
       <div className={styles.bountyDesc_extras}>
         <h3>Connect With Me:</h3>
+        <div className={styles.socialLinks}>
+          {bountyData.links.others.map((link) => {
+            return (
+              <SocialLink key={Object.keys(link)[0]}>
+                {Object.keys(link)[0]}
+              </SocialLink>
+            );
+          })}
+        </div>
       </div>
       <div className={styles.bountyDesc_outer}>
         <h3>Bounty Description:</h3>

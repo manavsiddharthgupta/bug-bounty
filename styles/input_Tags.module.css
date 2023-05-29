@@ -1,7 +1,7 @@
 .tags_outer {
-  border: 1px solid black;
   padding: 0.5rem 0.25rem;
   border-radius: 2px;
+  background-color: #c3dbea;
 }
 .all_tags {
   height: auto;
@@ -12,4 +12,7 @@
   padding: 0.15rem 0.25rem;
   max-width: 174px;
   width: 100%;
+  border-radius: 3px;
+  border: none;
+  background-color: #c1d7e6;
 }
