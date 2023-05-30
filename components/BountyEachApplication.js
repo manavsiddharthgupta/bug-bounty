@@ -1,8 +1,17 @@
 import Button from "@/ui/Button";
 import styles from "../styles/bountyeachapplication.module.css";
 import { useEffect, useRef, useState } from "react";
+import Image from "next/image";
+import pfp from "../store/userPfp.png";
 import SocialLink from "./SocialLink";
-const BountyApplication = ({ applicationData }) => {
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCheck } from "@fortawesome/free-solid-svg-icons";
+const BountyApplication = ({
+  applicationData,
+  isSelected,
+  onSetSelected,
+  showSelectButton,
+}) => {
   const [isOverflowing, setOverflowing] = useState(false);
   const [isShowmore, setShowmore] = useState(false);
   const detailsRef = useRef();
@@ -44,13 +53,39 @@ const BountyApplication = ({ applicationData }) => {
       setShowmore(true);
     }
   };
+
+  const appliedOn = applicationData.appliedOn
+    ? applicationData.appliedOn
+    : "Applied 2 days ago";
+
   return (
     <div className={styles.application_outer_div}>
       <div className={styles.application_userprofile}>
-        <img src="" alt="_pfp" />
+        <Image
+          src={
+            applicationData.applicationUserpfp
+              ? applicationData.applicationUserpfp
+              : pfp
+          }
+          width={30}
+          height={30}
+          className={styles.pfpImg}
+          alt="alt pfp"
+        />
         <p>{applicationData.applicationEmail}</p>
+        {!isSelected && showSelectButton && (
+          <Button
+            onClick={() => {
+              onSetSelected();
+            }}
+            className={styles.approveBtn}
+          >
+            <FontAwesomeIcon icon={faCheck} />
+            <span>Accept</span>
+          </Button>
+        )}
       </div>
-      <p className={styles.application_postedDate}>Applied 2 days ago</p>
+      <p className={styles.application_postedDate}>{appliedOn}</p>
       <p
         ref={detailsRef}
         className={

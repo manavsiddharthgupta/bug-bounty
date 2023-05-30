@@ -8,18 +8,20 @@
   display: flex;
   gap: 0.5rem;
   align-items: center;
-  flex-wrap: wrap;
+  /* flex-wrap: wrap; */
 }
-.application_userprofile img {
+.pfpImg {
   width: 30px;
   height: 30px;
-  border: 1px solid black;
   border-radius: 30px;
 }
 
 .application_userprofile p {
   font-size: 0.85em;
   font-weight: 500;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 .application_postedDate {
   margin: 1rem 0rem;
@@ -39,8 +41,15 @@
 }
 .connections {
   /* border: 1px solid black; */
-  margin-top: 0.25em;
+  margin-top: 1em;
   display: flex;
   gap: 0.5rem;
   flex-wrap: wrap;
+}
+.approveBtn {
+  padding: 0.4rem 0.75rem 0.3rem 0.75rem;
+  background-color: #28a745 !important;
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 0.25rem;
 }

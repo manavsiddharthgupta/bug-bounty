@@ -11,9 +11,9 @@ const BountyAllApplication = ({
   onSetBountyApplication,
   onSetLoadingState,
 }) => {
-  console.log(bountyAllApplication);
-
   const [error, setError] = useState(null);
+  const [isSelected, setSelected] = useState(false);
+  const [showSelectBtn, setToshowSelectButton] = useState(false);
   const router = useRouter();
 
   const fetchBountyApplication = useCallback(async () => {
@@ -28,7 +28,6 @@ const BountyAllApplication = ({
       }
       const data = await res.json();
       onSetBountyApplication(data.test);
-      console.log("All BountyAllApplication");
       onSetLoadingState(false);
     } catch (err) {
       console.log(err);
@@ -44,6 +43,10 @@ const BountyAllApplication = ({
   if (isLoading) return <Loading />;
 
   if (error) return <ErrorComponent>{error}</ErrorComponent>;
+
+  const onSelectHandler = () => {
+    setSelected(true);
+  };
 
   return (
     <>
@@ -61,6 +64,9 @@ const BountyAllApplication = ({
                     : bountyEachApplication.applicationEmail
                 }
                 applicationData={bountyEachApplication}
+                isSelected={isSelected}
+                onSetSelected={onSelectHandler}
+                showSelectButton={showSelectBtn}
               />
             );
           })

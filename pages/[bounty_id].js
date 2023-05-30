@@ -16,6 +16,7 @@ import ApplyModal from "@/ui/ApplyModal";
 import { BackGroundModal } from "@/ui/Modal";
 import { useSession } from "next-auth/react";
 import Chat from "@/components/Chat";
+import { getDaySuffix, getMonthName } from "@/utils/dateFormatter";
 
 const EachBounty = ({ eachBounty }) => {
   const [showApplyModal, setShowModal] = useState(false);
@@ -33,7 +34,10 @@ const EachBounty = ({ eachBounty }) => {
   if (router.isFallback) {
     return <h1>Loading...</h1>;
   }
-  const currRoute = router.query.t ? `/?t=${router.query.t}` : "/";
+  const currRoute =
+    router.query.t === "applications" || router.query.t === "discussions"
+      ? `/?t=${router.query.t}`
+      : "/";
   const navLinks = [
     { name: "Details", href: "/" },
     { name: "Applications", href: "/?t=applications" },
@@ -41,7 +45,9 @@ const EachBounty = ({ eachBounty }) => {
   ];
 
   let date = new Date(eachBounty.openedOn);
-  let postedOn = `${date.getDate()}-${date.getMonth()}-${date.getFullYear()}`;
+  let postedOn = `${date.getDate()}${getDaySuffix(
+    date.getDate()
+  )} ${getMonthName(date.getMonth())} ${date.getFullYear()}`;
 
   const onShowApplyModal = () => {
     setShowModal(true);
@@ -55,6 +61,21 @@ const EachBounty = ({ eachBounty }) => {
     navigator.clipboard.writeText(window.location.href);
     alert("Copied to clipboard");
   };
+
+  let mainComponent = <BountyDescription bountyData={eachBounty} />;
+
+  if (router.query.t === "applications") {
+    mainComponent = (
+      <BountyAllApplication
+        bountyAllApplication={allApplications}
+        isLoading={isLoading}
+        onSetBountyApplication={setBountyApplication}
+        onSetLoadingState={setLoadingState}
+      />
+    );
+  } else if (router.query.t === "discussions") {
+    mainComponent = <Chat />;
+  }
 
   return (
     <>
@@ -115,20 +136,7 @@ const EachBounty = ({ eachBounty }) => {
                 );
               })}
             </div>
-            <div className={styles.mainSection}>
-              {router.query.t === undefined && (
-                <BountyDescription bountyData={eachBounty} />
-              )}
-              {router.query.t === "applications" && (
-                <BountyAllApplication
-                  bountyAllApplication={allApplications}
-                  isLoading={isLoading}
-                  onSetBountyApplication={setBountyApplication}
-                  onSetLoadingState={setLoadingState}
-                />
-              )}
-              {router.query.t === "discussions" && <Chat />}
-            </div>
+            <div className={styles.mainSection}>{mainComponent}</div>
           </Card>
         </section>
       </main>
@@ -139,7 +147,6 @@ const EachBounty = ({ eachBounty }) => {
             totalApplicants={eachBounty.applicants}
             onSetCloseModal={onHideApplyModal}
             onSetBountyApplication={setBountyApplication}
-            onSetLoadingState={setLoadingState}
           />,
           document.getElementById("modal")
         )}

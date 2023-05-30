@@ -20,6 +20,8 @@ import { bountyDataformat } from "@/store/createBountyconversion";
 import CommunicationComponent from "@/components/CommunicationComponent";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
+import Loading from "@/ui/Loading";
+import ErrorComponent from "@/ui/ErrorComponent";
 
 const CreateBounty = () => {
   // states
@@ -115,9 +117,9 @@ const CreateBounty = () => {
   const { data, status } = useSession();
 
   if (status === "loading") {
-    return <h2>Loading...</h2>;
+    return <Loading />;
   } else if (status === "unauthenticated") {
-    return <h2>You are not authorized</h2>;
+    return <ErrorComponent>You are not authorized</ErrorComponent>;
   }
 
   // functions
@@ -265,31 +267,6 @@ const CreateBounty = () => {
                 setCommunicationLink={setCommunicationLink}
                 allLinkTypes={allLinkTypes}
               />
-
-              {/* <div className={styles.communicationLink}>
-                {communicationLink.map((link, index) => {
-                  return (
-                    <CommunicationInput
-                      id={index}
-                      key={index}
-                      value={link}
-                      onSetCommunicationHandler={setCommunicationLink}
-                      // CommunicationLinkprovide={allLinkTypes}
-                    />
-                  );
-                })}
-
-                <Button
-                  className={styles.add_button}
-                  onClick={() => {
-                    setCommunicationLink((prevState) => {
-                      return [...prevState, { type: "Discord", link: "" }];
-                    });
-                  }}
-                >
-                  Add
-                </Button>
-              </div> */}
               <AmountInput
                 value={amount}
                 onChange={(e) => {

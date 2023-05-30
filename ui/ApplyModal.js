@@ -13,7 +13,6 @@ const ApplyModal = ({
   totalApplicants,
   onSetCloseModal,
   onSetBountyApplication,
-  onSetLoadingState,
 }) => {
   const [communicationLink, setCommunicationLink] = useState([
     {
@@ -65,7 +64,6 @@ const ApplyModal = ({
       },
       body: JSON.stringify(data),
     };
-    onSetLoadingState(true);
     setLoadingState(true);
     fetch("http://localhost:3002/applications", options)
       .then((res) => {
@@ -80,7 +78,6 @@ const ApplyModal = ({
           ...JSON.parse(JSON.stringify(prevState)),
           data.applicationData,
         ]);
-        onSetLoadingState(false);
         onSetCloseModal();
       })
       .catch((err) => {
