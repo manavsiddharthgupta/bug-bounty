@@ -6,3 +6,12 @@
   background-color: #048ce0;
   color: white;
 }
+
+.disableBtn {
+  padding: 0.2rem 0.6rem;
+  border-radius: 10px;
+  border: none;
+  color: white;
+  background-color: #5d7d90;
+  cursor: not-allowed;
+}

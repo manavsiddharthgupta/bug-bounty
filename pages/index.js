@@ -58,7 +58,7 @@ export default function Home({ allBounties }) {
   const bountyTypeInitialState = {
     bountyType: "",
     pageTitle: "",
-    fetchedBounty: allBounties,
+    fetchedBounty: Array.isArray(allBounties) ? allBounties : [],
   };
 
   const [bountiesType, DispatchBountyTypefunc] = useReducer(
@@ -67,6 +67,7 @@ export default function Home({ allBounties }) {
   );
   const [showCreateBountyModal, setModalState] = useState(false);
   const [isLoading, setLoadingState] = useState(false);
+  const [error, setError] = useState(null);
 
   const { data, status } = useSession();
   const router = useRouter();
@@ -75,6 +76,11 @@ export default function Home({ allBounties }) {
     const fetchAllBounty = async () => {
       setLoadingState(true);
       const res = await fetch("http://localhost:3002/bounties");
+      if (!res.ok) {
+        setError("Error while fetching data");
+        setLoadingState(false);
+        return;
+      }
       const data = await res.json();
       DispatchBountyTypefunc({
         type: "RE_FETCH_BOUNTY",
@@ -159,6 +165,7 @@ export default function Home({ allBounties }) {
 
           <AllBounties
             isLoading={isLoading}
+            err={error}
             allBountyData={bountiesType.fetchedBounty}
           />
         </section>
@@ -178,6 +185,12 @@ export async function getStaticProps(context) {
   // temprorary code need changes (error handling not implemented) ----
   const res = await fetch("http://localhost:3002/bounties");
   const data = await res.json();
+  // console.log(data);
+  // if (!Array.isArray(data.test)) {
+  //   return {
+  //     notFound: true,
+  //   };
+  // }
   return {
     props: {
       allBounties: data.test,

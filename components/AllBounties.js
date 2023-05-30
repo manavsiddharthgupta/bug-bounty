@@ -3,8 +3,10 @@ import styles from "../styles/allbounties.module.css";
 import FilterComponent from "./FilterComponent";
 import Bounty from "./Bounty";
 import Link from "next/link";
+import Loading from "@/ui/Loading";
+import ErrorComponent from "@/ui/ErrorComponent";
 
-const AllBounties = ({ isLoading, allBountyData }) => {
+const AllBounties = ({ isLoading, allBountyData, err }) => {
   let allBountyComponent = allBountyData.map((each) => {
     return (
       <Link key={each._id} href={`/${each._id}`}>
@@ -21,8 +23,9 @@ const AllBounties = ({ isLoading, allBountyData }) => {
     <Card>
       <div className={styles.bounty_parent_div}>
         <FilterComponent />
-        {isLoading && <p>Loading...</p>}
-        {!isLoading && allBountyComponent}
+        {err && <ErrorComponent>{err}</ErrorComponent>}
+        {isLoading && !err && <Loading />}
+        {!isLoading && !err && allBountyComponent}
       </div>
     </Card>
   );

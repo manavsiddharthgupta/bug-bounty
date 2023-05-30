@@ -33,8 +33,6 @@ const EachBounty = ({ eachBounty }) => {
   if (router.isFallback) {
     return <h1>Loading...</h1>;
   }
-
-  console.log(eachBounty);
   const currRoute = router.query.t ? `/?t=${router.query.t}` : "/";
   const navLinks = [
     { name: "Details", href: "/" },
@@ -61,8 +59,8 @@ const EachBounty = ({ eachBounty }) => {
   return (
     <>
       <Head>
-        <title>Bug Bounty</title>
-        <meta name="Bounty Deatils" content="See Details About Bounty" />
+        <title>{eachBounty.title}</title>
+        <meta name={eachBounty.title} content={eachBounty.subTitle} />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>

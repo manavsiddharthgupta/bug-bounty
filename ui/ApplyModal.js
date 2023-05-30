@@ -39,6 +39,7 @@ const ApplyModal = ({
     setBlurHandler: setApplicationEmailBlurHandler,
   } = useInputState();
 
+  const [isLoadingState, setLoadingState] = useState(false);
   const allLinkTypes = [
     { type: "Discord", placeholder: "Username #1323" },
     { type: "Twitter", placeholder: "Username" },
@@ -65,22 +66,27 @@ const ApplyModal = ({
       body: JSON.stringify(data),
     };
     onSetLoadingState(true);
+    setLoadingState(true);
     fetch("http://localhost:3002/applications", options)
       .then((res) => {
+        if (!res.ok) {
+          throw Error("Your application could not be posted");
+        }
         return res.json();
       })
       .then((result) => {
         console.log(result);
+        onSetBountyApplication((prevState) => [
+          ...JSON.parse(JSON.stringify(prevState)),
+          data.applicationData,
+        ]);
+        onSetLoadingState(false);
+        onSetCloseModal();
       })
       .catch((err) => {
+        setLoadingState(true);
         console.log(err);
       });
-    onSetBountyApplication((prevState) => [
-      ...JSON.parse(JSON.stringify(prevState)),
-      data.applicationData,
-    ]);
-    onSetLoadingState(false);
-    onSetCloseModal();
   };
 
   return (
@@ -106,7 +112,13 @@ const ApplyModal = ({
           setCommunicationLink={setCommunicationLink}
           allLinkTypes={allLinkTypes}
         />
-        <Button onClick={sendApplicationFunc}>Send Application</Button>
+        <Button
+          makeDisabled={isLoadingState ? true : false}
+          className={styles.send_button}
+          onClick={sendApplicationFunc}
+        >
+          Send Application
+        </Button>
       </div>
     </Modal>
   );

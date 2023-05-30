@@ -47,8 +47,9 @@
   width: fit-content;
 }
 .createBtn {
-  padding: 0.5rem 0rem;
+  padding: 0.5rem 0rem !important;
 }
+
 @media screen and (min-width: 720px) {
   .outer_create_new_bounty h1 {
     font-size: 2rem;

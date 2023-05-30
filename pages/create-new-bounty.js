@@ -81,6 +81,7 @@ const CreateBounty = () => {
     setBlurHandler: setBountyFigmaLinkBlurHandler,
   } = useInputState();
 
+  const [isLoading, setLoading] = useState(false);
   // side Effects
   useEffect(() => {
     switch (router.query.type) {
@@ -147,18 +148,22 @@ const CreateBounty = () => {
       body: JSON.stringify(data),
     };
 
+    setLoading(true);
     fetch("http://localhost:3002/bounties", options)
       .then((res) => {
+        if (!res.ok) {
+          throw Error("Your Bounty could not be posted");
+        }
         return res.json();
       })
       .then((result) => {
         console.log(result);
+        router.push("/");
       })
       .catch((err) => {
+        setLoading(false);
         console.log(err);
       });
-
-    router.push("/");
   };
 
   const onCreateTag = (val) => {
@@ -291,7 +296,11 @@ const CreateBounty = () => {
                   setAmount(e.target.value);
                 }}
               />
-              <Button className={styles.createBtn} onClick={onCreateBountyFunc}>
+              <Button
+                makeDisabled={isLoading ? true : false}
+                className={styles.createBtn}
+                onClick={onCreateBountyFunc}
+              >
                 Create Bounty
               </Button>
             </section>

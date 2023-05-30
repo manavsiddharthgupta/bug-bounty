@@ -2,6 +2,8 @@ import { useCallback, useEffect, useState } from "react";
 import styles from "../styles/BountyAllApplication.module.css";
 import BountyApplication from "./BountyEachApplication";
 import { useRouter } from "next/router";
+import ErrorComponent from "@/ui/ErrorComponent";
+import Loading from "@/ui/Loading";
 
 const BountyAllApplication = ({
   bountyAllApplication,
@@ -11,26 +13,37 @@ const BountyAllApplication = ({
 }) => {
   console.log(bountyAllApplication);
 
+  const [error, setError] = useState(null);
   const router = useRouter();
 
   const fetchBountyApplication = useCallback(async () => {
     onSetLoadingState(true);
-    const res = await fetch(
-      `http://localhost:3002/applications?bountyId=${router.query.bounty_id}`
-    );
-    const data = await res.json();
-    onSetBountyApplication(data.test);
-    console.log("All BountyAllApplication");
-    onSetLoadingState(false);
+    setError(null);
+    try {
+      const res = await fetch(
+        `http://localhost:3002/applications?bountyId=${router.query.bounty_id}`
+      );
+      if (!res.ok) {
+        throw Error("Error While querying data");
+      }
+      const data = await res.json();
+      onSetBountyApplication(data.test);
+      console.log("All BountyAllApplication");
+      onSetLoadingState(false);
+    } catch (err) {
+      console.log(err);
+      onSetLoadingState(false);
+      setError("Error while querying data");
+    }
   }, []);
 
   useEffect(() => {
     fetchBountyApplication();
   }, [fetchBountyApplication]);
 
-  if (isLoading) return <p>Loading...</p>;
+  if (isLoading) return <Loading />;
 
-  // const test = ;
+  if (error) return <ErrorComponent>{error}</ErrorComponent>;
 
   return (
     <>
