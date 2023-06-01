@@ -70,6 +70,8 @@ export default function Home({ allBounties }) {
   const [error, setError] = useState(null);
 
   const { data, status } = useSession();
+
+  console.log(data);
   const router = useRouter();
 
   useEffect(() => {

@@ -10,7 +10,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
 import BountyDescription from "@/components/BountyDescriptionComponent";
 import BountyAllApplication from "@/components/BountyAllApplication";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import ApplyModal from "@/ui/ApplyModal";
 import { BackGroundModal } from "@/ui/Modal";
@@ -22,9 +22,16 @@ const EachBounty = ({ eachBounty }) => {
   const [showApplyModal, setShowModal] = useState(false);
   const [allApplications, setBountyApplication] = useState([]);
   const [isLoading, setLoadingState] = useState(true);
+  const [yourBounty, setIfyourBounty] = useState(false);
   const router = useRouter();
 
   const { data, status } = useSession();
+
+  useEffect(() => {
+    if (data && data?.user?.email === eachBounty?.openedBy) {
+      setIfyourBounty(true);
+    }
+  }, [data, eachBounty]);
 
   let disableDiscussionLink = false;
   if (status === "loading" || status === "unauthenticated") {
@@ -71,6 +78,7 @@ const EachBounty = ({ eachBounty }) => {
         isLoading={isLoading}
         onSetBountyApplication={setBountyApplication}
         onSetLoadingState={setLoadingState}
+        checkIfyourBounty={yourBounty}
       />
     );
   } else if (router.query.t === "discussions") {
@@ -96,7 +104,7 @@ const EachBounty = ({ eachBounty }) => {
             <h2 className={styles.title}>{eachBounty.title}</h2>
             <div className={styles.outer_user_data}>
               <div className={styles.user_date}>
-                <p className={styles.user_link}>@{eachBounty.openedBy}</p>
+                <p className={styles.user_link}>{eachBounty.openedBy}</p>
                 <span>Posted On {postedOn}</span>
               </div>
               <div className={styles.share_apply}>
@@ -106,7 +114,7 @@ const EachBounty = ({ eachBounty }) => {
                   icon={faPaperPlane}
                   className={styles.share_icon}
                 />
-                {status === "authenticated" && (
+                {status === "authenticated" && !yourBounty && (
                   <Button
                     className={styles.apply_btn}
                     onClick={onShowApplyModal}
@@ -147,6 +155,7 @@ const EachBounty = ({ eachBounty }) => {
             totalApplicants={eachBounty.applicants}
             onSetCloseModal={onHideApplyModal}
             onSetBountyApplication={setBountyApplication}
+            user_data={data}
           />,
           document.getElementById("modal")
         )}

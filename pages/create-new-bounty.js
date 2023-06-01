@@ -114,7 +114,8 @@ const CreateBounty = () => {
     };
   }, [isFormTouched]);
 
-  const { data, status } = useSession();
+  const { data: user_data, status } = useSession();
+  const email = user_data?.user?.email;
 
   if (status === "loading") {
     return <Loading />;
@@ -139,14 +140,21 @@ const CreateBounty = () => {
       figmaLink,
       communicationLink,
       amount,
-      router.query.type
+      router.query.type,
+      email
     );
+
+    const accessToken = user_data?.accessToken;
+    console.log(accessToken);
+
+    const headers = {
+      "Content-Type": "application/json",
+      Authorization: `${accessToken}`,
+    };
 
     const options = {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
+      headers,
       body: JSON.stringify(data),
     };
 

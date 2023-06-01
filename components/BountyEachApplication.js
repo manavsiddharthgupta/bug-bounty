@@ -58,6 +58,8 @@ const BountyApplication = ({
     ? applicationData.appliedOn
     : "Applied 2 days ago";
 
+  const applicationSelected = applicationData._id === isSelected;
+
   return (
     <div className={styles.application_outer_div}>
       <div className={styles.application_userprofile}>
@@ -76,13 +78,16 @@ const BountyApplication = ({
         {!isSelected && showSelectButton && (
           <Button
             onClick={() => {
-              onSetSelected();
+              onSetSelected(applicationData._id);
             }}
             className={styles.approveBtn}
           >
             <FontAwesomeIcon icon={faCheck} />
             <span>Accept</span>
           </Button>
+        )}
+        {applicationSelected && (
+          <span className={styles.selected}>Selected</span>
         )}
       </div>
       <p className={styles.application_postedDate}>{appliedOn}</p>

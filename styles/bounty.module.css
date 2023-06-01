@@ -74,6 +74,10 @@
   font-size: 0.75em;
   font-weight: 600;
   color: #374147;
+  width: fit-content;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 .extra_inf div {
   display: flex;

@@ -29,7 +29,7 @@ function getMonthName(month) {
     "November",
     "December",
   ];
-  return monthNames[month - 1];
+  return monthNames[month];
 }
 
 module.exports = {

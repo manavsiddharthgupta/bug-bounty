@@ -53,3 +53,11 @@
   flex-wrap: nowrap;
   gap: 0.25rem;
 }
+.selected {
+  padding: 0.4rem 0.75rem 0.3rem 0.75rem;
+  background-color: #28a745 !important;
+  display: flex;
+  color: white;
+  font-size: smaller;
+  border-radius: 20px;
+}

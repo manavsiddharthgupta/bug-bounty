@@ -2,10 +2,13 @@ import Tag from "@/ui/Tag";
 import styles from "../styles/bounty.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
+import { getDaySuffix, getMonthName } from "@/utils/dateFormatter";
 
 const Bounty = ({ eachBountyData }) => {
   const date = new Date(eachBountyData.openedOn);
-  let postedOn = `${date.getDate()}-${date.getMonth()}-${date.getFullYear()}`;
+  let postedOn = `${date.getDate()}${getDaySuffix(
+    date.getDate()
+  )} ${getMonthName(date.getMonth())} ${date.getFullYear()}`;
   return (
     <div className={styles.bounty}>
       <div className={styles.bounty_price_status_outer}>
@@ -41,7 +44,7 @@ const Bounty = ({ eachBountyData }) => {
       </span>
       <div className={styles.extra_inf}>
         <p>
-          opened on {postedOn} by @{eachBountyData.openedBy}
+          opened on {postedOn} by {eachBountyData.openedBy}
         </p>
         <div>
           <FontAwesomeIcon className={styles.user_icon} icon={faUser} />

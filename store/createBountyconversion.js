@@ -1,3 +1,4 @@
+import { useSession } from "next-auth/react";
 import { v4 as uuidv4 } from "uuid";
 
 export const bountyDataformat = (
@@ -11,7 +12,8 @@ export const bountyDataformat = (
   figmaLink,
   communicationLink,
   amount,
-  bountytype
+  bountytype,
+  email
 ) => {
   const date = new Date().toISOString();
   console.log(date);
@@ -28,7 +30,7 @@ export const bountyDataformat = (
     tags: tags,
     subTitle: subTitle,
     requiredSkills: requiredSkills,
-    openedBy: "johndoe",
+    openedBy: email,
     openedOn: date,
     applicants: 0,
     bountyStatus: "open",

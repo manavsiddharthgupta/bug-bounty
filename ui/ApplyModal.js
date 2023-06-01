@@ -13,6 +13,7 @@ const ApplyModal = ({
   totalApplicants,
   onSetCloseModal,
   onSetBountyApplication,
+  user_data,
 }) => {
   const [communicationLink, setCommunicationLink] = useState([
     {
@@ -54,16 +55,24 @@ const ApplyModal = ({
         communicationLink,
         applicationEmail: applicationEmail.current.value,
         bountyId: router.query.bounty_id,
+        selectionStatus: false,
       },
       updatedBountyApplicants: totalApplicants + 1,
     };
+
+    const accessToken = user_data?.accessToken;
+
+    const headers = {
+      "Content-Type": "application/json",
+      Authorization: `${accessToken}`,
+    };
+
     const options = {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
+      headers,
       body: JSON.stringify(data),
     };
+
     setLoadingState(true);
     fetch("http://localhost:3002/applications", options)
       .then((res) => {
@@ -81,7 +90,7 @@ const ApplyModal = ({
         onSetCloseModal();
       })
       .catch((err) => {
-        setLoadingState(true);
+        setLoadingState(false);
         console.log(err);
       });
   };

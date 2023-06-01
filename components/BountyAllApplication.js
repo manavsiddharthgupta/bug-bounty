@@ -10,10 +10,10 @@ const BountyAllApplication = ({
   isLoading,
   onSetBountyApplication,
   onSetLoadingState,
+  checkIfyourBounty,
 }) => {
   const [error, setError] = useState(null);
-  const [isSelected, setSelected] = useState(false);
-  const [showSelectBtn, setToshowSelectButton] = useState(false);
+  const [isSelected, setSelected] = useState(null);
   const router = useRouter();
 
   const fetchBountyApplication = useCallback(async () => {
@@ -27,6 +27,11 @@ const BountyAllApplication = ({
         throw Error("Error While querying data");
       }
       const data = await res.json();
+      data.test.forEach((eachData) => {
+        if (eachData?.selectionStatus) {
+          setSelected(eachData._id);
+        }
+      });
       onSetBountyApplication(data.test);
       onSetLoadingState(false);
     } catch (err) {
@@ -44,8 +49,8 @@ const BountyAllApplication = ({
 
   if (error) return <ErrorComponent>{error}</ErrorComponent>;
 
-  const onSelectHandler = () => {
-    setSelected(true);
+  const onSelectHandler = (id) => {
+    setSelected(id);
   };
 
   return (
@@ -66,7 +71,7 @@ const BountyAllApplication = ({
                 applicationData={bountyEachApplication}
                 isSelected={isSelected}
                 onSetSelected={onSelectHandler}
-                showSelectButton={showSelectBtn}
+                showSelectButton={checkIfyourBounty}
               />
             );
           })

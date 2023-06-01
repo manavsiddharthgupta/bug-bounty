@@ -52,7 +52,8 @@
   font-weight: 600;
   color: black;
 }
-.mdx ul {
+.mdx ul,
+.mdx ol {
   padding: 0.25rem 0rem;
   margin-left: 2rem;
 }
