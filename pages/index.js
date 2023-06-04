@@ -71,7 +71,6 @@ export default function Home({ allBounties }) {
 
   const { data, status } = useSession();
 
-  console.log(data);
   const router = useRouter();
 
   useEffect(() => {

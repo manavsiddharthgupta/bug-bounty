@@ -21,7 +21,7 @@ import CommunicationComponent from "@/components/CommunicationComponent";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
 import Loading from "@/ui/Loading";
-import ErrorComponent from "@/ui/ErrorComponent";
+import Feedback from "@/ui/Feedback";
 
 const CreateBounty = () => {
   // states
@@ -37,14 +37,27 @@ const CreateBounty = () => {
   ]);
   const [amount, setAmount] = useState(createBountyType.amt);
   const [isFormTouched, setFormTouched] = useState(false);
+  const [isTagTouched, setTagTouched] = useState(false);
+  const [isSkillTouched, setSkillTouched] = useState(false);
+
+  const onTagBlurHandler = () => {
+    setTagTouched(true);
+  };
+
+  const onSkillBlurHandler = () => {
+    setSkillTouched(true);
+  };
 
   // custom hooks
   const {
-    inputRef: bountyTitleRef,
+    inputValue: bountyTitleValue,
     isValueValid: isTitleValid,
     isTouched: isTitleTouch,
     setBlurHandler: setTitleBlurHandler,
-  } = useInputState();
+    onChangeHandler: onChangeTitleHandler,
+  } = useInputState((value) => {
+    return value.length > 12;
+  });
 
   const {
     textState: bountySubTitleValue,
@@ -52,7 +65,9 @@ const CreateBounty = () => {
     isTouched: isSubTitleTouch,
     setBlurHandler: setSubTitleBlurHandler,
     onChangeHandler: onChangeSubTitleHandler,
-  } = useTextAreaState();
+  } = useTextAreaState(null, (value) => {
+    return value.length > 20;
+  });
 
   const {
     textState: bountyDescriptionValue,
@@ -60,28 +75,42 @@ const CreateBounty = () => {
     isTouched: isDescriptionTouch,
     setBlurHandler: setDescriptionBlurHandler,
     onChangeHandler: onChangeDescriptionHandler,
-  } = useTextAreaState(createBountyType?.descStruc);
+  } = useTextAreaState(createBountyType?.descStruc, (value) => {
+    return value.length > 40;
+  });
 
   const {
-    inputRef: bountyCompleteDateRef,
+    inputValue: bountyCompleteDateValue,
     isValueValid: isBountyCompleteDateValid,
     isTouched: isBountyCompleteDateTouch,
     setBlurHandler: setBountyCompleteDateBlurHandler,
-  } = useInputState();
+    onChangeHandler: onChangeBountyCompleteDateHandler,
+  } = useInputState((value) => {
+    return value.length > 0;
+  });
 
   const {
-    inputRef: bountyGithubLinkRef,
+    inputValue: bountyGithubLinkValue,
     isValueValid: isGithubLinkValid,
     isTouched: isGithubLinkTouch,
     setBlurHandler: setBountyGithubLinkBlurHandler,
-  } = useInputState();
+    onChangeHandler: onChangeBountyGithubLinkHandler,
+  } = useInputState((value) => {
+    let githubLinkRegex = /^(https?:\/\/)?(www\.)?github\.com\/.+/;
+    return githubLinkRegex.test(value);
+  });
 
   const {
-    inputRef: bountyFigmaLinkRef,
+    inputValue: bountyFigmaLinkValue,
     isValueValid: isFigmaLinkValid,
     isTouched: isFigmaLinkTouch,
     setBlurHandler: setBountyFigmaLinkBlurHandler,
-  } = useInputState();
+    onChangeHandler: onChangeBountyFigmaLinkHandler,
+  } = useInputState((value) => {
+    const figmaLinkRegex =
+      /^(https?:\/\/)?(www\.)?figma\.com\/(file|proto)\/.+\/.+/;
+    return figmaLinkRegex.test(value);
+  });
 
   const [isLoading, setLoading] = useState(false);
   // side Effects
@@ -127,16 +156,16 @@ const CreateBounty = () => {
   const onCreateBountyFunc = () => {
     let figmaLink = null;
     if (router.query.type === "web-app") {
-      figmaLink = bountyFigmaLinkRef?.current?.value;
+      figmaLink = bountyFigmaLinkValue;
     }
     const data = bountyDataformat(
-      bountyTitleRef?.current?.value,
+      bountyTitleValue,
       bountySubTitleValue,
       bountyDescriptionValue,
       tags,
       skillRequired,
-      bountyCompleteDateRef?.current?.value,
-      bountyGithubLinkRef?.current?.value,
+      bountyCompleteDateValue,
+      bountyGithubLinkValue,
       figmaLink,
       communicationLink,
       amount,
@@ -218,11 +247,15 @@ const CreateBounty = () => {
             <h1>Create a Bounty</h1>
             <section>
               <Input
-                inputRef={bountyTitleRef}
+                inputValue={bountyTitleValue}
                 onBlur={setTitleBlurHandler}
                 label="Bounty Title"
                 type="text"
+                onChange={onChangeTitleHandler}
               />
+              <Feedback>
+                Your title should contains atleast 12 character
+              </Feedback>
               <TextArea
                 value={bountySubTitleValue}
                 onChange={onChangeSubTitleHandler}
@@ -230,6 +263,9 @@ const CreateBounty = () => {
                 onBlur={setSubTitleBlurHandler}
                 label="Sub Title"
               />
+              <Feedback>
+                Your title should contains atleast 20 character
+              </Feedback>
               <TextArea
                 value={bountyDescriptionValue}
                 onChange={onChangeDescriptionHandler}
@@ -237,38 +273,56 @@ const CreateBounty = () => {
                 onBlur={setDescriptionBlurHandler}
                 label="Description"
               />
+              <Feedback>
+                Your title should contains atleast 40 character
+              </Feedback>
               <InputTags
                 createTagfunc={onCreateTag}
                 label="Tags"
                 tagsData={tags}
                 placeholder="Write required tags"
+                onBlur={onTagBlurHandler}
               />
+              <Feedback>
+                There should be minimum 1 tag and maximum 5 tags
+              </Feedback>
               <InputTags
                 createTagfunc={onCreateReqSkills}
                 label="Required Skills"
                 tagsData={skillRequired}
                 placeholder="Write required skills"
+                onBlur={onSkillBlurHandler}
               />
+              <Feedback>
+                There should be minimum 1 and maximum 5 required skills
+              </Feedback>
               <Input
-                inputRef={bountyCompleteDateRef}
+                inputValue={bountyCompleteDateValue}
                 onBlur={setBountyCompleteDateBlurHandler}
                 label="Bounty Completition Date"
                 type="date"
+                onChange={onChangeBountyCompleteDateHandler}
               />
+              <Feedback>Inavlid date input</Feedback>
               <Input
-                inputRef={bountyGithubLinkRef}
+                inputValue={bountyGithubLinkValue}
                 onBlur={setBountyGithubLinkBlurHandler}
                 label="Github Repository Link"
                 type="text"
+                onChange={onChangeBountyGithubLinkHandler}
               />
-
+              <Feedback>Inavlid github link</Feedback>
               {router.query.type === "web-app" && (
-                <Input
-                  inputRef={bountyFigmaLinkRef}
-                  onBlur={setBountyFigmaLinkBlurHandler}
-                  label="Figma File Link"
-                  type="text"
-                />
+                <>
+                  <Input
+                    inputValue={bountyFigmaLinkValue}
+                    onBlur={setBountyFigmaLinkBlurHandler}
+                    label="Figma File Link"
+                    type="text"
+                    onChange={onChangeBountyFigmaLinkHandler}
+                  />
+                  <Feedback>Inavlid figma link</Feedback>
+                </>
               )}
               <CommunicationComponent
                 communicationLink={communicationLink}

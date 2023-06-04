@@ -1,9 +1,18 @@
 import { useEffect, useState } from "react";
 
-const useTextAreaState = (structure) => {
+const useTextAreaState = (
+  structure,
+  validFunc = () => {
+    return undefined;
+  }
+) => {
   const [textState, setTextState] = useState("");
-  const [isValueValid, setValidity] = useState(false);
+  // const [isValueValid, setValidity] = useState(false);
   const [isTouched, setifTouched] = useState(false);
+
+  let isValueValid = validFunc(textState);
+
+  console.log(isValueValid);
 
   useEffect(() => {
     if (structure) {
@@ -13,11 +22,6 @@ const useTextAreaState = (structure) => {
 
   const setBlurHandler = () => {
     setifTouched(true);
-    if (textState.trim() === "") {
-      setValidity(false);
-    } else {
-      setValidity(true);
-    }
   };
 
   const onChangeHandler = (e) => {

@@ -4,7 +4,7 @@ import CustomTags from "./CustomTags";
 import Label from "./Label";
 import List from "./List";
 
-const InputTags = ({ label, tagsData, createTagfunc, placeholder }) => {
+const InputTags = ({ label, tagsData, createTagfunc, placeholder, onBlur }) => {
   const [inputVal, setInput] = useState("");
   const inpRef = useRef();
 
@@ -37,6 +37,7 @@ const InputTags = ({ label, tagsData, createTagfunc, placeholder }) => {
             onKeyDown={onHitEnter}
             className={styles.tagInput}
             placeholder={placeholder}
+            onBlur={onBlur}
           />
         </div>
       </div>
