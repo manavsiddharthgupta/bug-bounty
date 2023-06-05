@@ -12,8 +12,6 @@ const useTextAreaState = (
 
   let isValueValid = validFunc(textState);
 
-  console.log(isValueValid);
-
   useEffect(() => {
     if (structure) {
       setTextState(structure);

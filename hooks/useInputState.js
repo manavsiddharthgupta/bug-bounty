@@ -5,8 +5,6 @@ const useInputState = (validatefunc) => {
 
   const isValueValid = validatefunc(inputValue);
 
-  console.log(isValueValid);
-
   const setBlurHandler = () => {
     setifTouched(true);
   };

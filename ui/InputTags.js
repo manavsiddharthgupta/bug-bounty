@@ -4,7 +4,14 @@ import CustomTags from "./CustomTags";
 import Label from "./Label";
 import List from "./List";
 
-const InputTags = ({ label, tagsData, createTagfunc, placeholder, onBlur }) => {
+const InputTags = ({
+  label,
+  tagsData,
+  createfunc,
+  popfunc,
+  placeholder,
+  onBlur,
+}) => {
   const [inputVal, setInput] = useState("");
   const inpRef = useRef();
 
@@ -16,12 +23,17 @@ const InputTags = ({ label, tagsData, createTagfunc, placeholder, onBlur }) => {
     setInput(e.target.value);
   };
 
-  const onHitEnter = (event) => {
+  const onHitEnter_Backspace = (event) => {
     if (event.key === "Enter" && inputVal.trim() !== "") {
-      createTagfunc(inputVal.trim());
+      event.preventDefault();
+      createfunc(inputVal.trim());
       setInput("");
+    } else if (event.key === "Backspace" && inputVal === "") {
+      event.preventDefault();
+      popfunc();
     }
   };
+
   return (
     <List onClick={focusfunc}>
       <Label>{label}</Label>
@@ -34,7 +46,7 @@ const InputTags = ({ label, tagsData, createTagfunc, placeholder, onBlur }) => {
             ref={inpRef}
             value={inputVal}
             onChange={onChangeHandler}
-            onKeyDown={onHitEnter}
+            onKeyDown={onHitEnter_Backspace}
             className={styles.tagInput}
             placeholder={placeholder}
             onBlur={onBlur}

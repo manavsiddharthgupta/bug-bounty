@@ -6,9 +6,15 @@ const CommunicationComponent = ({
   communicationLink,
   setCommunicationLink,
   allLinkTypes,
+  onSetCommunicationTouched,
 }) => {
   return (
-    <div className={styles.communicationLink}>
+    <div
+      className={styles.communicationLink}
+      onBlur={() => {
+        onSetCommunicationTouched(true);
+      }}
+    >
       {communicationLink.map((link, index) => {
         return (
           <CommunicationInput

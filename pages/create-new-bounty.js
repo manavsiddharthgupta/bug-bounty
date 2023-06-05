@@ -39,6 +39,17 @@ const CreateBounty = () => {
   const [isFormTouched, setFormTouched] = useState(false);
   const [isTagTouched, setTagTouched] = useState(false);
   const [isSkillTouched, setSkillTouched] = useState(false);
+  const [isCommunicationTouched, setCommunicationTouched] = useState(false);
+
+  let isTagValid = tags.length > 0 && tags.length < 6;
+  let isSkillValid = skillRequired.length > 0 && skillRequired.length < 6;
+  let isCommunicationValid = communicationLink.every(({ type, link }) => {
+    if (type === "Discord") {
+      return /^[a-zA-Z0-9_-]{2,32}$/.test(link);
+    }
+
+    return /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(link);
+  });
 
   const onTagBlurHandler = () => {
     setTagTouched(true);
@@ -102,8 +113,6 @@ const CreateBounty = () => {
 
   const {
     inputValue: bountyFigmaLinkValue,
-    isValueValid: isFigmaLinkValid,
-    isTouched: isFigmaLinkTouch,
     setBlurHandler: setBountyFigmaLinkBlurHandler,
     onChangeHandler: onChangeBountyFigmaLinkHandler,
   } = useInputState((value) => {
@@ -113,7 +122,7 @@ const CreateBounty = () => {
   });
 
   const [isLoading, setLoading] = useState(false);
-  // side Effects
+
   useEffect(() => {
     switch (router.query.type) {
       case "web-app":
@@ -158,51 +167,64 @@ const CreateBounty = () => {
     if (router.query.type === "web-app") {
       figmaLink = bountyFigmaLinkValue;
     }
-    const data = bountyDataformat(
-      bountyTitleValue,
-      bountySubTitleValue,
-      bountyDescriptionValue,
-      tags,
-      skillRequired,
-      bountyCompleteDateValue,
-      bountyGithubLinkValue,
-      figmaLink,
-      communicationLink,
-      amount,
-      router.query.type,
-      email
-    );
+    if (
+      isTitleValid &&
+      isSubtitleValid &&
+      isDescriptionValid &&
+      isTagValid &&
+      isSkillValid &&
+      isBountyCompleteDateValid &&
+      isGithubLinkValid &&
+      isCommunicationValid
+    ) {
+      const data = bountyDataformat(
+        bountyTitleValue,
+        bountySubTitleValue,
+        bountyDescriptionValue,
+        tags,
+        skillRequired,
+        bountyCompleteDateValue,
+        bountyGithubLinkValue,
+        figmaLink,
+        communicationLink,
+        amount,
+        router.query.type,
+        email
+      );
 
-    const accessToken = user_data?.accessToken;
-    console.log(accessToken);
+      const accessToken = user_data?.accessToken;
+      console.log(accessToken);
 
-    const headers = {
-      "Content-Type": "application/json",
-      Authorization: `${accessToken}`,
-    };
+      const headers = {
+        "Content-Type": "application/json",
+        Authorization: `${accessToken}`,
+      };
 
-    const options = {
-      method: "POST",
-      headers,
-      body: JSON.stringify(data),
-    };
+      const options = {
+        method: "POST",
+        headers,
+        body: JSON.stringify(data),
+      };
 
-    setLoading(true);
-    fetch("http://localhost:3002/bounties", options)
-      .then((res) => {
-        if (!res.ok) {
-          throw Error("Your Bounty could not be posted");
-        }
-        return res.json();
-      })
-      .then((result) => {
-        console.log(result);
-        router.push("/");
-      })
-      .catch((err) => {
-        setLoading(false);
-        console.log(err);
-      });
+      setLoading(true);
+      fetch("http://localhost:3002/bounties", options)
+        .then((res) => {
+          if (!res.ok) {
+            throw Error("Your Bounty could not be posted");
+          }
+          return res.json();
+        })
+        .then((result) => {
+          console.log(result);
+          router.push("/");
+        })
+        .catch((err) => {
+          setLoading(false);
+          console.log(err);
+        });
+    } else {
+      return;
+    }
   };
 
   const onCreateTag = (val) => {
@@ -214,6 +236,25 @@ const CreateBounty = () => {
   const onCreateReqSkills = (val) => {
     setSkillRequired((state) => {
       return [...state, val];
+    });
+  };
+
+  const onPopTag = () => {
+    console.log("pop");
+    setTags((state) => {
+      const newState = [...state];
+      newState.pop();
+
+      return [...newState];
+    });
+  };
+
+  const onPopReqSkills = () => {
+    setSkillRequired((state) => {
+      const newState = [...state];
+      newState.pop();
+
+      return [...newState];
     });
   };
 
@@ -253,9 +294,11 @@ const CreateBounty = () => {
                 type="text"
                 onChange={onChangeTitleHandler}
               />
-              <Feedback>
-                Your title should contains atleast 12 character
-              </Feedback>
+              {!isTitleValid && isTitleTouch && (
+                <Feedback>
+                  Your title should contains atleast 12 character
+                </Feedback>
+              )}
               <TextArea
                 value={bountySubTitleValue}
                 onChange={onChangeSubTitleHandler}
@@ -263,9 +306,11 @@ const CreateBounty = () => {
                 onBlur={setSubTitleBlurHandler}
                 label="Sub Title"
               />
-              <Feedback>
-                Your title should contains atleast 20 character
-              </Feedback>
+              {!isSubtitleValid && isSubTitleTouch && (
+                <Feedback>
+                  Your title should contains atleast 20 character
+                </Feedback>
+              )}
               <TextArea
                 value={bountyDescriptionValue}
                 onChange={onChangeDescriptionHandler}
@@ -273,29 +318,37 @@ const CreateBounty = () => {
                 onBlur={setDescriptionBlurHandler}
                 label="Description"
               />
-              <Feedback>
-                Your title should contains atleast 40 character
-              </Feedback>
+              {!isDescriptionValid && isDescriptionTouch && (
+                <Feedback>
+                  Your title should contains atleast 40 character
+                </Feedback>
+              )}
               <InputTags
-                createTagfunc={onCreateTag}
+                createfunc={onCreateTag}
+                popfunc={onPopTag}
                 label="Tags"
                 tagsData={tags}
                 placeholder="Write required tags"
                 onBlur={onTagBlurHandler}
               />
-              <Feedback>
-                There should be minimum 1 tag and maximum 5 tags
-              </Feedback>
+              {!isTagValid && isTagTouched && (
+                <Feedback>
+                  There should be minimum 1 tag and maximum 6 tags
+                </Feedback>
+              )}
               <InputTags
-                createTagfunc={onCreateReqSkills}
+                createfunc={onCreateReqSkills}
+                popfunc={onPopReqSkills}
                 label="Required Skills"
                 tagsData={skillRequired}
                 placeholder="Write required skills"
                 onBlur={onSkillBlurHandler}
               />
-              <Feedback>
-                There should be minimum 1 and maximum 5 required skills
-              </Feedback>
+              {!isSkillValid && isSkillTouched && (
+                <Feedback>
+                  There should be minimum 1 and maximum 6 required skills
+                </Feedback>
+              )}
               <Input
                 inputValue={bountyCompleteDateValue}
                 onBlur={setBountyCompleteDateBlurHandler}
@@ -303,7 +356,9 @@ const CreateBounty = () => {
                 type="date"
                 onChange={onChangeBountyCompleteDateHandler}
               />
-              <Feedback>Inavlid date input</Feedback>
+              {!isBountyCompleteDateValid && isBountyCompleteDateTouch && (
+                <Feedback>Inavlid date input</Feedback>
+              )}
               <Input
                 inputValue={bountyGithubLinkValue}
                 onBlur={setBountyGithubLinkBlurHandler}
@@ -311,24 +366,27 @@ const CreateBounty = () => {
                 type="text"
                 onChange={onChangeBountyGithubLinkHandler}
               />
-              <Feedback>Inavlid github link</Feedback>
+              {!isGithubLinkValid && isGithubLinkTouch && (
+                <Feedback>Inavlid github link</Feedback>
+              )}
               {router.query.type === "web-app" && (
-                <>
-                  <Input
-                    inputValue={bountyFigmaLinkValue}
-                    onBlur={setBountyFigmaLinkBlurHandler}
-                    label="Figma File Link"
-                    type="text"
-                    onChange={onChangeBountyFigmaLinkHandler}
-                  />
-                  <Feedback>Inavlid figma link</Feedback>
-                </>
+                <Input
+                  inputValue={bountyFigmaLinkValue}
+                  onBlur={setBountyFigmaLinkBlurHandler}
+                  label="Figma File Link"
+                  type="text"
+                  onChange={onChangeBountyFigmaLinkHandler}
+                />
               )}
               <CommunicationComponent
                 communicationLink={communicationLink}
                 setCommunicationLink={setCommunicationLink}
                 allLinkTypes={allLinkTypes}
+                onSetCommunicationTouched={setCommunicationTouched}
               />
+              {!isCommunicationValid && isCommunicationTouched && (
+                <Feedback>Invalid Communication Details</Feedback>
+              )}
               <AmountInput
                 value={amount}
                 onChange={(e) => {
@@ -352,8 +410,5 @@ const CreateBounty = () => {
 export default CreateBounty;
 
 // content change based on types which will reflects on bounty details page
-// make sure change bounty details page also
-// add input feedback logic
 // set min amount i.e > 0
 // date validation i.e date should be greater than today
-// tags and requiredSkills validation i.e should not be empty
