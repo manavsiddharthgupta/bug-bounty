@@ -11,9 +11,11 @@ const BountyAllApplication = ({
   onSetBountyApplication,
   onSetLoadingState,
   checkIfyourBounty,
+  userData,
 }) => {
   const [error, setError] = useState(null);
   const [isSelected, setSelected] = useState(null);
+  const [isSelectedLoading, setLoading] = useState(false);
   const router = useRouter();
 
   const fetchBountyApplication = useCallback(async () => {
@@ -50,7 +52,41 @@ const BountyAllApplication = ({
   if (error) return <ErrorComponent>{error}</ErrorComponent>;
 
   const onSelectHandler = (id) => {
-    setSelected(id);
+    console.log("update the status");
+    setLoading(true);
+
+    const applicationStatusData = {
+      bounty_id: router.query.bounty_id,
+      bountyStatus: "In Progress",
+      selectionStatus: true,
+    };
+
+    const headers = {
+      "Content-Type": "application/json",
+      Authorization: `${userData?.accessToken}`,
+    };
+
+    const options = {
+      method: "POST",
+      headers,
+      body: JSON.stringify(applicationStatusData),
+    };
+
+    fetch(`http://localhost:3002/applications/${id}`, options)
+      .then((res) => {
+        if (!res.ok) {
+          throw Error("Your Bounty could not be posted");
+        }
+        return res.json();
+      })
+      .then((result) => {
+        console.log(result);
+        setSelected(id);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   return (
@@ -72,6 +108,7 @@ const BountyAllApplication = ({
                 isSelected={isSelected}
                 onSetSelected={onSelectHandler}
                 showSelectButton={checkIfyourBounty}
+                isSelectedBtnLoading={isSelectedLoading}
               />
             );
           })

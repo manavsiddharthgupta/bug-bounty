@@ -26,8 +26,12 @@ const BountyDescription = ({ bountyData }) => {
         <h3>Connect With Me:</h3>
         <div className={styles.socialLinks}>
           {bountyData.links.others.map((link) => {
+            console.log();
             return (
-              <SocialLink key={Object.keys(link)[0]}>
+              <SocialLink
+                link={link[Object.keys(link)[0]]}
+                key={Object.keys(link)[0]}
+              >
                 {Object.keys(link)[0]}
               </SocialLink>
             );

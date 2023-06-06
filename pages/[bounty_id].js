@@ -79,6 +79,7 @@ const EachBounty = ({ eachBounty }) => {
         onSetBountyApplication={setBountyApplication}
         onSetLoadingState={setLoadingState}
         checkIfyourBounty={yourBounty}
+        userData={data}
       />
     );
   } else if (router.query.t === "discussions") {

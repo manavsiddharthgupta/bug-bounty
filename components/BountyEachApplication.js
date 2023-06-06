@@ -11,6 +11,7 @@ const BountyApplication = ({
   isSelected,
   onSetSelected,
   showSelectButton,
+  isSelectedBtnLoading,
 }) => {
   const [isOverflowing, setOverflowing] = useState(false);
   const [isShowmore, setShowmore] = useState(false);
@@ -80,6 +81,7 @@ const BountyApplication = ({
             onClick={() => {
               onSetSelected(applicationData._id);
             }}
+            makeDisabled={isSelectedBtnLoading}
             className={styles.approveBtn}
           >
             <FontAwesomeIcon icon={faCheck} />
@@ -108,8 +110,12 @@ const BountyApplication = ({
         </Button>
       )}
       <div className={styles.connections}>
-        {applicationData.communicationLink.map(({ type }) => {
-          return <SocialLink key={type}>{type}</SocialLink>;
+        {applicationData.communicationLink.map((data) => {
+          return (
+            <SocialLink link={data.link} key={data.type}>
+              {data.type}
+            </SocialLink>
+          );
         })}
       </div>
     </div>
@@ -117,5 +123,3 @@ const BountyApplication = ({
 };
 
 export default BountyApplication;
-
-// add connection links
