@@ -58,9 +58,9 @@ const BountyAllApplication = ({
     const applicationStatusData = {
       bounty_id: router.query.bounty_id,
       bountyStatus: "In Progress",
-      selectionStatus: true,
     };
 
+    const selectionStatus = true;
     const headers = {
       "Content-Type": "application/json",
       Authorization: `${userData?.accessToken}`,
@@ -72,7 +72,10 @@ const BountyAllApplication = ({
       body: JSON.stringify(applicationStatusData),
     };
 
-    fetch(`http://localhost:3002/applications/${id}`, options)
+    fetch(
+      `http://localhost:3002/applications/${id}/${selectionStatus}`,
+      options
+    )
       .then((res) => {
         if (!res.ok) {
           throw Error("Your Bounty could not be posted");

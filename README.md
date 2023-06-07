@@ -49,9 +49,6 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 - [ ] Each Bounty Discussion component
 - [x] Implement Apply Modal
 - [x] Implement share option
-- [ ] Share on twitter
-- [ ] update state according to the all bounties type
-- [ ] infinite scroll
 - [ ] update filter logic
 - [x] Backend logic
 - [x] user centric/ authentication, authorization

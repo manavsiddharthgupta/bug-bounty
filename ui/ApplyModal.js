@@ -27,8 +27,25 @@ const ApplyModal = ({
     if (type === "Discord") {
       return /^[a-zA-Z0-9_-]{2,32}$/.test(link);
     }
-
-    return /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(link);
+    if (type === "Twitter") {
+      return /^@[A-Za-z0-9_]{1,15}$/.test(link);
+    }
+    if (type === "Github") {
+      return /^https?:\/\/github\.com\/[A-Za-z\d](?:[A-Za-z\d]|-(?=[A-Za-z\d])){0,38}\/?$/.test(
+        link
+      );
+    }
+    if (type === "LinkedIn") {
+      return /^https?:\/\/(?:www\.)?linkedin\.com\/(?:in|pub|company)\/[a-zA-Z0-9_-]+\/?$/.test(
+        link
+      );
+    }
+    if (type === "Website") {
+      return /^(http(s)?:\/\/)?([w]{3}\.)?[a-zA-Z0-9.-]+\.[a-zA-Z]{2,5}(\/\S*)?$/.test(
+        link
+      );
+    }
+    return false;
   });
 
   const router = useRouter();
@@ -53,7 +70,7 @@ const ApplyModal = ({
     return /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(value);
   });
 
-  console.log(isApplicationEmailValid, isApplicationEmailTouch);
+  console.log(user_data);
   const [isLoadingState, setLoadingState] = useState(false);
   const allLinkTypes = [
     { type: "Discord", placeholder: "Username #1323" },
@@ -73,7 +90,8 @@ const ApplyModal = ({
         applicationData: {
           applicationMessage,
           communicationLink,
-          applicationEmail: applicationEmail,
+          applicationEmail: user_data?.user.email,
+          applicationUserpfp: user_data?.user.image,
           bountyId: router.query.bounty_id,
           selectionStatus: false,
         },

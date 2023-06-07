@@ -17,6 +17,9 @@ const nextConfig = {
   pageExtensions: ["ts", "tsx", "js", "jsx", "md", "mdx"],
   // Optionally, add any other Next.js config below
   reactStrictMode: true,
+  images: {
+    domains: ["avatars.githubusercontent.com"],
+  },
 };
 
 // Merge MDX config with Next.js config
