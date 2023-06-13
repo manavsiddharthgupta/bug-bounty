@@ -4,10 +4,22 @@ A Webapp where you find a bug, connect with mentor to fix the bug and earn rewar
 
 ## Getting Started
 
+**Before cloning the frontend repo make sure you have cloned the backend repo and have it running on your local machine. Here is the link to the Backend Repo: [Backend Repo](https://github.com/manavsiddharthgupta/bug-bounty-backend)**
+
 clone git repo:
 
 ```
 git clone https://github.com/manavsiddharthgupta/bug-bounty.git
+```
+
+create a `.env` file and add the following:
+
+```env
+GITHUB_ID=your_github_id
+GITHUB_SECRET=your_github_secret
+SECRET=your_next_auth_secret
+
+// generate your next_auth_secret using: https://generate-secret.vercel.app/32
 ```
 
 install all dependencies:
@@ -32,11 +44,7 @@ npm run dev
 
 #
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
-
 The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
-
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
@@ -46,7 +54,6 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 - [x] Create Bounty Page
 - [x] Each Bounty Description component
 - [x] Each Bounty Application component
-- [ ] Each Bounty Discussion component
 - [x] Implement Apply Modal
 - [x] Implement share option
 - [ ] update filter logic
