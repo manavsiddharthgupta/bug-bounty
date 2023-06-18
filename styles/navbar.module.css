@@ -7,6 +7,11 @@
   height: 4em;
   backdrop-filter: blur(10px);
 }
+.navTitle {
+  font-size: larger;
+  font-weight: 700;
+  color: #048ce0;
+}
 .nav {
   display: flex;
   align-items: center;
@@ -16,9 +21,6 @@
   max-width: 1440px;
   padding: 0rem 2rem;
   justify-content: space-between;
-}
-.nav h1 {
-  color: #048ce0;
 }
 .nav ul {
   display: none;
@@ -39,9 +41,13 @@
   font-weight: 400;
   cursor: pointer;
   color: #374147;
+  border: 2px solid #374147;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
 }
 .authBtn:hover {
-  color: black;
+  color: white;
+  background-color: #374147;
 }
 .authNav {
   display: flex;

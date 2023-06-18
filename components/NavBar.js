@@ -10,7 +10,7 @@ const NavBar = () => {
   return (
     <nav className={styles.outer_nav}>
       <div className={styles.nav}>
-        <h1>Bug Bounty</h1>
+        <Link className={styles.navTitle} href="/">Bug Bounty🪲 </Link>
         {status === "authenticated" && (
           <ul>
             <li>
