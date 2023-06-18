@@ -173,7 +173,7 @@ const EachBounty = ({ eachBounty }) => {
 export default EachBounty;
 
 export async function getStaticPaths() {
-  // temporary code (need to implement error handling) -----
+
   const res = await fetch("http://localhost:3002/bounties");
   const data = await res.json();
   const paths = data.test.map((bounty) => {
@@ -188,7 +188,7 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps(context) {
-  // temporary code (need to implement error handling) -----
+
   const { params } = context;
   const res = await fetch(`http://localhost:3002/bounties/${params.bounty_id}`);
   const data = await res.json();
@@ -205,4 +205,4 @@ export async function getStaticProps(context) {
   };
 }
 
-// useTwitter Api to share the link as a tweet
+

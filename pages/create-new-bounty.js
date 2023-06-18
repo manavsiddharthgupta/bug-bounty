@@ -408,7 +408,3 @@ const CreateBounty = () => {
   );
 };
 export default CreateBounty;
-
-// content change based on types which will reflects on bounty details page
-// set min amount i.e > 0
-// date validation i.e date should be greater than today

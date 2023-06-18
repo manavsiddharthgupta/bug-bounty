@@ -183,15 +183,10 @@ export default function Home({ allBounties }) {
 }
 
 export async function getStaticProps(context) {
-  // temprorary code need changes (error handling not implemented) ----
+
   const res = await fetch("http://localhost:3002/bounties");
   const data = await res.json();
-  // console.log(data);
-  // if (!Array.isArray(data.test)) {
-  //   return {
-  //     notFound: true,
-  //   };
-  // }
+
   return {
     props: {
       allBounties: data.test,
