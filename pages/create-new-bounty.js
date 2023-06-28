@@ -207,7 +207,7 @@ const CreateBounty = () => {
       };
 
       setLoading(true);
-      fetch("http://localhost:3002/bounties", options)
+      fetch("https://bug-bounty-backend.vercel.app/bounties", options)
         .then((res) => {
           if (!res.ok) {
             throw Error("Your Bounty could not be posted");

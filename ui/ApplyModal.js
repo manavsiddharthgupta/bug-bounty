@@ -112,7 +112,7 @@ const ApplyModal = ({
       };
 
       setLoadingState(true);
-      fetch("http://localhost:3002/applications", options)
+      fetch("https://bug-bounty-backend.vercel.app/applications", options)
         .then((res) => {
           if (!res.ok) {
             throw Error("Your application could not be posted");

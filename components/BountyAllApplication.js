@@ -23,7 +23,7 @@ const BountyAllApplication = ({
     setError(null);
     try {
       const res = await fetch(
-        `http://localhost:3002/applications?bountyId=${router.query.bounty_id}`
+        `https://bug-bounty-backend.vercel.app/applications?bountyId=${router.query.bounty_id}`
       );
       if (!res.ok) {
         throw Error("Error While querying data");
@@ -73,7 +73,7 @@ const BountyAllApplication = ({
     };
 
     fetch(
-      `http://localhost:3002/applications/${id}/${selectionStatus}`,
+      `https://bug-bounty-backend.vercel.app/applications/${id}/${selectionStatus}`,
       options
     )
       .then((res) => {

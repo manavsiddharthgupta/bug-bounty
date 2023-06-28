@@ -76,7 +76,7 @@ export default function Home({ allBounties }) {
   useEffect(() => {
     const fetchAllBounty = async () => {
       setLoadingState(true);
-      const res = await fetch("http://localhost:3002/bounties");
+      const res = await fetch("https://bug-bounty-backend.vercel.app/bounties");
       if (!res.ok) {
         setError("Error while fetching data");
         setLoadingState(false);
@@ -184,7 +184,7 @@ export default function Home({ allBounties }) {
 
 export async function getStaticProps(context) {
 
-  const res = await fetch("http://localhost:3002/bounties");
+  const res = await fetch("https://bug-bounty-backend.vercel.app/bounties");
   const data = await res.json();
 
   return {
