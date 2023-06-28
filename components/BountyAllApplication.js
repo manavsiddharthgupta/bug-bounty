@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
-import styles from "@/styles/BountyAllApplication.module.css";
+import styles from "@/styles/bountyallapplication.module.css";
 import BountyApplication from "./BountyEachApplication";
 import { useRouter } from "next/router";
 import ErrorComponent from "@/ui/ErrorComponent";
