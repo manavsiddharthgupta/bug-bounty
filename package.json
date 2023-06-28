@@ -20,5 +20,9 @@
     "react-infinite-scroll-component": "^6.1.0",
     "react-markdown": "^8.0.7",
     "uuid": "^9.0.0"
+  },
+  "devDependencies": {
+    "css-loader": "^6.8.1",
+    "style-loader": "^3.3.3"
   }
 }
