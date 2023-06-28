@@ -1,5 +1,5 @@
 import { useSession, signIn, signOut } from "next-auth/react";
-import styles from "../styles/navbar.module.css";
+import styles from "@/styles/navbar.module.css";
 import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars } from "@fortawesome/free-solid-svg-icons";

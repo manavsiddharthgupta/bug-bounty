@@ -1,7 +1,7 @@
 import Card from "@/ui/Card";
 import Head from "next/head";
 import { useRouter } from "next/router";
-import styles from "../styles/create-new-bounty.module.css";
+import styles from "@/styles/create-new-bounty.module.css";
 import Button from "@/ui/Button";
 import Input from "@/ui/Input";
 import useInputState from "@/hooks/useInputState";

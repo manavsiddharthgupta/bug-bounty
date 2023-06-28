@@ -1,5 +1,5 @@
 import List from "@/ui/List";
-import styles from "../styles/amountInput.module.css";
+import styles from "@/styles/amountInput.module.css";
 import Label from "@/ui/Label";
 
 const AmountInput = ({ value, onChange }) => {

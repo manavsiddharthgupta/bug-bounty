@@ -2,7 +2,7 @@ import NavBar from "@/components/NavBar";
 import Card from "@/ui/Card";
 import Head from "next/head";
 import { useRouter } from "next/router";
-import styles from "../styles/eachbounty.module.css";
+import styles from "@/styles/eachbounty.module.css";
 import Tag from "@/ui/Tag";
 import Link from "next/link";
 import Button from "@/ui/Button";

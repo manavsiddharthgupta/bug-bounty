@@ -1,5 +1,5 @@
 import Button from "@/ui/Button";
-import styles from "../styles/bountyeachapplication.module.css";
+import styles from "@/styles/bountyeachapplication.module.css";
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import pfp from "../store/userPfp.png";

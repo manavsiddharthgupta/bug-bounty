@@ -1,5 +1,5 @@
 import Card from "@/ui/Card";
-import styles from "../styles/allbounties.module.css";
+import styles from "@/styles/allbounties.module.css";
 import FilterComponent from "./FilterComponent";
 import Bounty from "./Bounty";
 import Link from "next/link";

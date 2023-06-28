@@ -1,4 +1,4 @@
-import styles from "../styles/communicationcomponent.module.css";
+import styles from "@/styles/communicationcomponent.module.css";
 import Button from "../ui/Button";
 import CommunicationInput from "./CommunicationInputComponent";
 

@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import styles from "../styles/sociallink.module.css";
+import styles from "@/styles/sociallink.module.css";
 import { faArrowUpRightFromSquare } from "@fortawesome/free-solid-svg-icons";
 
 const SocialLink = ({ children, link }) => {

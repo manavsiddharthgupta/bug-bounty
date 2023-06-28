@@ -3,7 +3,7 @@ import { useEffect, useReducer, useState } from "react";
 import { createPortal } from "react-dom";
 import Head from "next/head";
 import NavBar from "@/components/NavBar";
-import styles from "../styles/home.module.css";
+import styles from "@/styles/home.module.css";
 import BountyServices from "@/components/BountyServices";
 import AllBounties from "@/components/AllBounties";
 import PageTitle from "@/components/PageTitle";

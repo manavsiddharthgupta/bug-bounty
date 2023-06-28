@@ -1,4 +1,4 @@
-import styles from "../styles/textarea.module.css";
+import styles from "@/styles/textarea.module.css";
 import Label from "./Label";
 import List from "./List";
 

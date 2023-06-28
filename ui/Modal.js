@@ -1,4 +1,4 @@
-import styles from "../styles/modal.module.css";
+import styles from "@/styles/modal.module.css";
 
 export const Modal = ({ children }) => {
   return <div className={styles.modal}>{children}</div>;

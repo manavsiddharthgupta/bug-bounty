@@ -1,5 +1,5 @@
 import Card from "@/ui/Card";
-import styles from "../styles/bountyServices.module.css";
+import styles from "@/styles/bountyServices.module.css";
 
 const BountyServices = () => {
   return (

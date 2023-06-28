@@ -1,4 +1,4 @@
-import styles from "../styles/tag.module.css";
+import styles from "@/styles/tag.module.css";
 
 const Tag = (props) => {
   let classes = styles.tag;

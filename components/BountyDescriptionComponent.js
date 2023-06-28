@@ -1,4 +1,4 @@
-import styles from "../styles/bountydescription.module.css";
+import styles from "@/styles/bountydescription.module.css";
 import ReactMarkdown from "react-markdown";
 import SocialLink from "./SocialLink";
 

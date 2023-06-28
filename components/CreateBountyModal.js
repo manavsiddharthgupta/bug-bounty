@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 import Button from "../ui/Button";
-import styles from "../styles/createbountymodal.module.css";
+import styles from "@/styles/createbountymodal.module.css";
 import {
   faTools,
   faLightbulb,

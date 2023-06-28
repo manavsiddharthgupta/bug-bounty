@@ -1,4 +1,4 @@
-import styles from "../styles/filtercomponent.module.css";
+import styles from "@/styles/filtercomponent.module.css";
 const FilterComponent = () => {
   return (
     <div className={styles.filter_outerlayer}>

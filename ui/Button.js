@@ -1,4 +1,4 @@
-import styles from "../styles/button.module.css";
+import styles from "@/styles/button.module.css";
 
 const Button = ({ children, className, onClick, makeDisabled }) => {
   let classes = makeDisabled ? styles.disableBtn : styles.btn;

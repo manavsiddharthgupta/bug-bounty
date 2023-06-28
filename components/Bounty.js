@@ -1,5 +1,5 @@
 import Tag from "@/ui/Tag";
-import styles from "../styles/bounty.module.css";
+import styles from "@/styles/bounty.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
 import { getDaySuffix, getMonthName } from "@/utils/dateFormatter";

@@ -1,5 +1,5 @@
 import { useRef, useState } from "react";
-import styles from "../styles/input_Tags.module.css";
+import styles from "@/styles/input_Tags.module.css";
 import CustomTags from "./CustomTags";
 import Label from "./Label";
 import List from "./List";

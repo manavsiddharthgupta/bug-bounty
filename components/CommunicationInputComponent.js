@@ -1,5 +1,5 @@
 import Label from "../ui/Label";
-import styles from "../styles/comms_input.module.css";
+import styles from "@/styles/comms_input.module.css";
 import List from "@/ui/List";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";

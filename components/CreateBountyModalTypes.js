@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import styles from "../styles/createbounty_modaltypes.module.css";
+import styles from "@/styles/createbounty_modaltypes.module.css";
 
 const BountyType = ({
   id,

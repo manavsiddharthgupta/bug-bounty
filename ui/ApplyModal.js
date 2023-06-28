@@ -1,4 +1,4 @@
-import styles from "../styles/applymodal.module.css";
+import styles from "@/styles/applymodal.module.css";
 import Input from "./Input";
 import { Modal } from "./Modal";
 import TextArea from "./TextArea";

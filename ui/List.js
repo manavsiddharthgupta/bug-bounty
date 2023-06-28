@@ -1,4 +1,4 @@
-import styles from "../styles/list.module.css";
+import styles from "@/styles/list.module.css";
 
 const List = (props) => {
   return (

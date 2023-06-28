@@ -1,4 +1,4 @@
-import styles from "../styles/label.module.css";
+import styles from "@/styles/label.module.css";
 const Label = (props) => {
   return <label className={styles.label}>{props.children}</label>;
 };
