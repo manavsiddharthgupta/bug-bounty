@@ -31,7 +31,9 @@ const NavBar = () => {
             </h2>
           )}
           {status === "unauthenticated" && (
-            <h2 onClick={signIn} className={styles.authBtn}>
+            <h2 onClick={() => {
+              signIn("github")
+            }} className={styles.authBtn}>
               Sign in
             </h2>
           )}
