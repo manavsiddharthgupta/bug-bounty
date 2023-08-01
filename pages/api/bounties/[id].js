@@ -1,31 +1,36 @@
 import clientPromise from "../../../utils/mongoConnect";
 
-export default async function getOneBounty(req, res) {
-  let client = await clientPromise;
-  let db = await client.db();
-  if (db === null) {
-    console.log("error: ", "Database Not Found");
-    res.status(401).send({
-      test: "Error while querying",
-    });
-  }
-  const { query } = req;
-  const { id } = query;
-  const collection = db.collection("bounties");
-  collection
-    .find({ _id: id })
-    .next()
-    .then((result) => {
+export default async function handler(req, res) {
+  try {
+    const client = await clientPromise;
+    const db = client.db();
+    if (db === null) {
+      console.log("error: ", "Database Not Found");
+      return res.status(500).json({
+        message: "Error while querying",
+      });
+    }
+
+    const { query } = req;
+    const { id } = query;
+    const collection = db.collection("bounties");
+
+    const result = await collection.findOne({ _id: id });
+    if (result) {
       console.log(result);
-      res.status(200).send({
+      return res.status(200).json({
         id: id,
         bountyData: result,
       });
-    })
-    .catch((err) => {
-      console.log("error", err);
-      res.status(401).send({
-        test: "Error while querying",
+    } else {
+      return res.status(404).json({
+        message: "Bounty not found",
       });
+    }
+  } catch (err) {
+    console.log("error", err);
+    return res.status(500).json({
+      message: "Error while querying",
     });
+  }
 }

@@ -17,6 +17,7 @@ import { BackGroundModal } from "@/ui/Modal";
 import { useSession } from "next-auth/react";
 import Chat from "@/components/Chat";
 import { getDaySuffix, getMonthName } from "@/utils/dateFormatter";
+import clientPromise from "@/utils/mongoConnect";
 
 const EachBounty = ({ eachBounty }) => {
   const [showApplyModal, setShowModal] = useState(false);
@@ -175,9 +176,11 @@ const domain = process.env.DOMAIN;
 export default EachBounty;
 
 export async function getStaticPaths() {
-  const res = await fetch(domain + "/api/bounties");
-  const data = await res.json();
-  const paths = data.test.map((bounty) => {
+  const client = await clientPromise;
+  const db = client.db();
+  const collection = db.collection("bounties");
+  const data = await collection.find().toArray();
+  const paths = data.map((bounty) => {
     return {
       params: { bounty_id: `${bounty._id}` },
     };
@@ -190,17 +193,20 @@ export async function getStaticPaths() {
 
 export async function getStaticProps(context) {
   const { params } = context;
-  const res = await fetch(`${domain}/api/bounties/${params.bounty_id}`);
-  const data = await res.json();
+  const client = await clientPromise;
+  const db = client.db();
+  const collection = db.collection("bounties");
 
-  if (!data.bountyData) {
+  const result = await collection.findOne({ _id: params.bounty_id });
+
+  if (!result) {
     return {
       notFound: true,
     };
   }
   return {
     props: {
-      eachBounty: data.bountyData,
+      eachBounty: result,
     },
   };
 }

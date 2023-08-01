@@ -2,80 +2,70 @@ import clientPromise from "../../../utils/mongoConnect";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "../auth/[...nextauth]";
 
-export default async function bounty(req, res) {
-  const getAllBounty = async () => {
+const getAllBounty = async (req, res) => {
+  try {
     if (req.query.type === "myposted") {
-      res.status(200).send({
-        test: "my posted bounties",
+      return res.status(200).json({
+        message: "My posted bounties",
       });
     } else if (req.query.type === "assigned") {
-      res.status(200).send({
-        test: "assigned bounties",
+      return res.status(200).json({
+        message: "Assigned bounties",
       });
     } else {
-      let client = await clientPromise;
-      let db = await client.db();
-      if (db === null) {
-        console.log("error: ", "Database Not Found");
-        res.status(401).send({
-          test: { err: "No DataBase not found" },
-        });
-      }
+      const client = await clientPromise;
+      const db = client.db();
       const collection = db.collection("bounties");
-      collection
-        .find()
-        .toArray()
-        .then((data) => {
-          // console.log(data);
-          res.status(200).send({
-            test: data,
-          });
-        })
-        .catch((err) => {
-          res.status(401).send({
-            test: { err: "Not Bounties Found" },
-          });
-        });
-    }
-  };
-
-  const postBounty = async () => {
-    const token = req.headers.authorization;
-    if (token === "undefined") {
-      return res.status(401).send({
-        test: "You are not authorized to post a bounty",
+      const data = await collection.find().toArray();
+      return res.status(200).json({
+        message: data,
       });
     }
-    const session = await getServerSession(req, res, authOptions);
-    if (!session) {
-      return res.status(401).send({
-        test: "You are not authorized to post a bounty",
-      });
-    }
+  } catch (err) {
+    console.error("Error occurred:", err);
+    return res.status(500).json({
+      error: "Internal Server Error",
+    });
+  }
+};
 
-    const body = req.body;
-    let client = await clientPromise;
-    let db = await client.db();
+const postBounty = async (req, res) => {
+  const token = req.headers.authorization;
+  if (token === "undefined") {
+    return res.status(401).json({
+      message: "You are not authorized to post a bounty",
+    });
+  }
+
+  const session = await getServerSession(req, res, authOptions);
+  if (!session) {
+    return res.status(401).json({
+      message: "You are not authorized to post a bounty",
+    });
+  }
+
+  const body = req.body;
+  try {
+    const client = await clientPromise;
+    const db = client.db();
     const collection = db.collection("bounties");
-    collection
-      .insertOne(body)
-      .then((result) => {
-        res.status(201).send({
-          test: "bounty posted",
-          dataPosted: result,
-        });
-      })
-      .catch((err) => {
-        console.log(err);
-        res.status(401).send({
-          test: "Your bounty didn't get posted",
-        });
-      });
-  };
+    const result = await collection.insertOne(body);
+    return res.status(201).json({
+      message: "Bounty posted",
+      dataPosted: result,
+    });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({
+      error: "Internal Server Error",
+    });
+  }
+};
 
+export default async function handler(req, res) {
   if (req.method === "POST") {
-    await postBounty();
+    postBounty(req, res);
   } else {
-    await getAllBounty();
+    getAllBounty(req, res);
   }
 }

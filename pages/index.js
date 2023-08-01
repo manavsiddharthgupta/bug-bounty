@@ -14,6 +14,7 @@ import { faAdd } from "@fortawesome/free-solid-svg-icons";
 import { BackGroundModal } from "@/ui/Modal";
 import CreateBountyModal from "@/components/CreateBountyModal";
 import { useSession } from "next-auth/react";
+import clientPromise from "@/utils/mongoConnect";
 
 const bountyReducerFunc = (state, action) => {
   if (action.type === "SET_ALL_BOUNTY") {
@@ -88,7 +89,7 @@ export default function Home({ allBounties }) {
       DispatchBountyTypefunc({
         type: "RE_FETCH_BOUNTY",
         payload: {
-          fetchedBounty: data.test,
+          fetchedBounty: data.message,
         },
       });
       setLoadingState(false);
@@ -185,12 +186,14 @@ export default function Home({ allBounties }) {
 }
 
 export async function getStaticProps(context) {
-  const res = await fetch(domain + "/api/bounties");
-  const data = await res.json();
+  const client = await clientPromise;
+  const db = client.db();
+  const collection = db.collection("bounties");
+  const data = await collection.find().toArray();
 
   return {
     props: {
-      allBounties: data.test,
+      allBounties: data,
     },
     revalidate: 2,
   };

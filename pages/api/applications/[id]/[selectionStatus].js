@@ -3,29 +3,29 @@ import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/pages/api/auth/[...nextauth]";
 import { ObjectId } from "mongodb";
 
-export default async function applications(req, res) {
-  const updateApplicationStatus = async () => {
+const updateApplicationStatus = async (req, res) => {
+  try {
     const token = req.headers.authorization;
     if (token === undefined) {
-      return res.status(401).send({
-        test: "You are not authorized to post a bounty",
+      return res.status(401).json({
+        message: "You are not authorized to post a bounty",
       });
     }
 
     const session = await getServerSession(req, res, authOptions);
     if (!session) {
-      return res.status(401).send({
-        test: "You are not authorized to post a bounty",
+      return res.status(401).json({
+        message: "You are not authorized to post a bounty",
       });
     }
 
     const body = req.body;
-    let client = await clientPromise;
-    let db = await client.db();
-    if (db === null) {
+    const client = await clientPromise;
+    const db = client.db();
+    if (!db) {
       console.log("error: ", "Database Not Found");
-      return res.status(401).send({
-        test: "Error while querying",
+      return res.status(500).json({
+        message: "Error while querying",
       });
     }
 
@@ -33,9 +33,8 @@ export default async function applications(req, res) {
     const applicationCollection = db.collection("applications");
 
     const appId = new ObjectId(req.query.id);
-    console.log(appId, body.bounty_id);
 
-    Promise.all([
+    await Promise.all([
       applicationCollection.updateOne(
         { _id: appId },
         { $set: { selectionStatus: true } }
@@ -44,28 +43,27 @@ export default async function applications(req, res) {
         { _id: body.bounty_id },
         { $set: { bountyStatus: "In Progress" } }
       ),
-    ])
-      .then((result) => {
-        console.log(result);
-        res.status(201).send({
-          test: "application status changed",
-          id: req.query.id,
-          data: body,
-        });
-      })
-      .catch((err) => {
-        console.log(err);
-        res.status(401).send({
-          test: "Your application status didn't get changed",
-        });
-      });
-  };
+    ]);
 
+    return res.status(201).json({
+      message: "Application status changed",
+      id: req.query.id,
+      data: body,
+    });
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json({
+      message: "Your application status didn't get changed",
+    });
+  }
+};
+
+export default async function handler(req, res) {
   if (req.method === "POST") {
-    await updateApplicationStatus();
+    await updateApplicationStatus(req, res);
   } else {
-    res.status(400).send({
-      test: "invalid request",
+    res.status(400).json({
+      message: "Invalid request",
     });
   }
 }

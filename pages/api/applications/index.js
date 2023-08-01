@@ -2,89 +2,99 @@ import clientPromise from "../../../utils/mongoConnect";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "../auth/[...nextauth]";
 
-export default async function applications(req, res) {
-  const getAllApplication = async () => {
-    if (req.query.bountyId) {
-      let client = await clientPromise;
-      let db = await client.db();
-      if (db === null) {
-        console.log("error: ", "Database Not Found");
-        res.status(401).send({
-          test: "Error while querying",
-        });
-      }
-      const collection = db.collection("applications");
-      collection
-        .find({ bountyId: req.query.bountyId })
-        .toArray()
-        .then((result) => {
-          res.status(200).send({
-            test: result,
-          });
-        })
-        .catch(() => {
-          res.status(400).send({
-            test: "Error while querying",
-          });
-        });
-    } else {
-      res.status(400).send({
-        test: "invalid bountyID",
+const getAllApplication = async (req, res) => {
+  try {
+    if (!req.query.bountyId) {
+      return res.status(400).json({
+        message: "Invalid bountyID",
       });
     }
-  };
 
-  const postAnApplication = async () => {
+    const client = await clientPromise;
+    const db = client.db();
+    if (!db) {
+      console.log("error: ", "Database Not Found");
+      return res.status(500).json({
+        message: "Error while querying",
+      });
+    }
+
+    const collection = db.collection("applications");
+    const result = await collection
+      .find({ bountyId: req.query.bountyId })
+      .toArray();
+    return res.status(200).json({
+      test: result,
+    });
+  } catch (err) {
+    console.error("Error occurred:", err);
+    return res.status(500).json({
+      error: "Error while querying",
+    });
+  }
+};
+
+const postAnApplication = async (req, res) => {
+  try {
     const token = req.headers.authorization;
     if (token === "undefined") {
-      return res.status(401).send({
-        test: "You are not authorized to post a bounty",
+      return res.status(401).json({
+        message: "You are not authorized to post a bounty",
       });
     }
+
     const session = await getServerSession(req, res, authOptions);
     if (!session) {
-      return res.status(401).send({
-        test: "You are not authorized to post a bounty",
+      return res.status(401).json({
+        message: "You are not authorized to post a bounty",
       });
     }
 
     const body = req.body;
-    let client = await clientPromise;
-    let db = await client.db();
-    if (db === null) {
+    const client = await clientPromise;
+    const db = client.db();
+    if (!db) {
       console.log("error: ", "Database Not Found");
-      res.status(401).send({
-        test: "Error while querying",
+      return res.status(500).json({
+        message: "Error while querying",
       });
     }
+
     const bountyCollection = db.collection("bounties");
     const applicationCollection = db.collection("applications");
 
-    Promise.all([
-      bountyCollection.updateOne(
-        { _id: body.applicationData.bountyId },
-        { $set: { applicants: body.updatedBountyApplicants } }
-      ),
-      applicationCollection.insertOne(body.applicationData),
-    ])
-      .then(() => {
-        res.status(201).send({
-          test: "Bounty Applicants Updated and Application Posted",
-          dataUpdated: body.updatedBountyApplicants,
-          dataPosted: body.applicationData,
-        });
-      })
-      .catch((err) => {
-        console.log(err);
-        res.status(401).send({
-          test: "Your application didn't get Posted",
-        });
-      });
-  };
+    const updateBountyPromise = bountyCollection.updateOne(
+      { _id: body.applicationData.bountyId },
+      { $set: { applicants: body.updatedBountyApplicants } }
+    );
 
+    const insertApplicationPromise = applicationCollection.insertOne(
+      body.applicationData
+    );
+
+    await Promise.all([updateBountyPromise, insertApplicationPromise]);
+
+    return res.status(201).json({
+      message: "Bounty Applicants Updated and Application Posted",
+      dataUpdated: body.updatedBountyApplicants,
+      dataPosted: body.applicationData,
+    });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({
+      message: "Your application didn't get Posted",
+    });
+  }
+};
+
+export default async function handler(req, res) {
   if (req.method === "POST") {
-    await postAnApplication();
+    await postAnApplication(req, res);
   } else if (req.method === "GET") {
-    await getAllApplication();
+    await getAllApplication(req, res);
+  } else {
+    res.status(405).json({
+      message: "Method Not Allowed",
+    });
   }
 }
