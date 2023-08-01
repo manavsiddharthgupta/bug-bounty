@@ -23,7 +23,7 @@ const BountyAllApplication = ({
     setError(null);
     try {
       const res = await fetch(
-        `https://bug-bounty-backend.vercel.app/applications?bountyId=${router.query.bounty_id}`
+        `/api/applications?bountyId=${router.query.bounty_id}`
       );
       if (!res.ok) {
         throw Error("Error While querying data");
@@ -72,10 +72,7 @@ const BountyAllApplication = ({
       body: JSON.stringify(applicationStatusData),
     };
 
-    fetch(
-      `https://bug-bounty-backend.vercel.app/applications/${id}/${selectionStatus}`,
-      options
-    )
+    fetch(`/api/applications/${id}/${selectionStatus}`, options)
       .then((res) => {
         if (!res.ok) {
           throw Error("Your Bounty could not be posted");

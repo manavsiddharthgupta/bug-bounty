@@ -170,11 +170,12 @@ const EachBounty = ({ eachBounty }) => {
   );
 };
 
+const domain = process.env.DOMAIN;
+
 export default EachBounty;
 
 export async function getStaticPaths() {
-
-  const res = await fetch("https://bug-bounty-backend.vercel.app/bounties");
+  const res = await fetch(domain + "/api/bounties");
   const data = await res.json();
   const paths = data.test.map((bounty) => {
     return {
@@ -188,9 +189,8 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps(context) {
-
   const { params } = context;
-  const res = await fetch(`https://bug-bounty-backend.vercel.app/bounties/${params.bounty_id}`);
+  const res = await fetch(`${domain}/api/bounties/${params.bounty_id}`);
   const data = await res.json();
 
   if (!data.bountyData) {
@@ -204,5 +204,3 @@ export async function getStaticProps(context) {
     },
   };
 }
-
-
