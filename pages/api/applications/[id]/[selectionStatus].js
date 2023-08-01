@@ -1,6 +1,6 @@
-import clientPromise from "../../../utils/mongoConnect";
+import clientPromise from "@/utils/mongoConnect";
 import { getServerSession } from "next-auth/next";
-import { authOptions } from "../auth/[...nextauth]";
+import { authOptions } from "@/pages/api/auth/[...nextauth]";
 import { ObjectId } from "mongodb";
 
 export default async function applications(req, res) {
